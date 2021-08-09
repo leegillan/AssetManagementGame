@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Economy : MonoBehaviour
 {
+    //public variable to set in inspector
+    public GameObject gameManager;
+
     //Declare money variable
     public int money;
 
@@ -17,9 +20,17 @@ public class Economy : MonoBehaviour
         money = 10000;
     }
 
-    // Update is called once per frame
-    void Update()
+    //Add money
+    public void AddMoney(int m)
     {
-        
+        //add money value
+        money = money + m;
+    }
+
+    //takeaway money
+    public void MinusMoney(int m)
+    {
+        //add money value
+        money = money - m;
     }
 }
