@@ -38,7 +38,7 @@ public class GridScript : MonoBehaviour
             for (int j = 0; j < rowLength; j++)
             {
                 //Calls Create Square function to place a unique tile
-                CreateSquare(new Vector3((xSpacing * (i % columnLength)), 1.0f, (zSpacing * (j % rowLength))), id);
+                CreateSquare(new Vector3((xSpacing * (i % columnLength)), 0.0f, (zSpacing * (j % rowLength))), id);
 
                 id++;
             }
