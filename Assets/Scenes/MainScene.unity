@@ -874,13 +874,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f578dae0a08c1d47a35accf79787db1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  xStart: 0
-  yStart: 0
-  columnLength: 2
-  rowLength: 2
-  xSpacing: 10
-  zSpacing: 10
-  gridSquare: {fileID: 1133085944520557373, guid: e3dce57e80673284aa1ca00c0161ca64,
+  xStart: -10
+  yStart: -10
+  columnLength: 100
+  rowLength: 100
+  xSpacing: 6
+  zSpacing: 5
+  gridSquare: {fileID: 8270362907156975660, guid: 226e70a90aea1a64ababc2adefa1bdb3,
     type: 3}
 --- !u!4 &1723065725
 Transform:
@@ -1189,7 +1189,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: eb0ef48f1f6bc9b4e93703f81d08bba8, type: 2}
+  - {fileID: 2100000, guid: 68579b8b934d0634ea690d88cb357dfd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
