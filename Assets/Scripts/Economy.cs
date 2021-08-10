@@ -14,10 +14,37 @@ public class Economy : MonoBehaviour
     public int GetMoney() { return money; }
     public void SetMoney(int mon) { money = mon; }
 
+    float spendTime;
+    float gainTime;
+
     // Start is called before the first frame update
     void Start()
     {
-        money = 10000;
+        money = 5000;
+    }
+
+    private void Update()
+    {
+        //Expenditure and Operation/Maintenance costs getting taken away from budget
+        spendTime += Time.deltaTime;
+        
+        if (spendTime > 5)
+        {
+            spendTime = 0;
+
+            MinusMoney(100);
+        }
+
+        //Yearly/Quarterly earnings added to budget
+        gainTime += Time.deltaTime;
+
+        if (gainTime > 20)
+        {
+            gainTime = 0;
+
+            AddMoney(1000);
+        }
+
     }
 
     //Add money
