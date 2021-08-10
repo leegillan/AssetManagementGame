@@ -25,22 +25,24 @@ public class Economy : MonoBehaviour
 
     private void Update()
     {
+        //Expenditure and Operation/Maintenance costs getting taken away from budget
         spendTime += Time.deltaTime;
         
         if (spendTime > 5)
         {
             spendTime = 0;
 
-            money -= 100;
+            MinusMoney(100);
         }
 
+        //Yearly/Quarterly earnings added to budget
         gainTime += Time.deltaTime;
 
         if (gainTime > 20)
         {
             gainTime = 0;
 
-            money += 1000;
+            AddMoney(1000);
         }
 
     }

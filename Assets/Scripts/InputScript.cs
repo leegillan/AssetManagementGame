@@ -8,11 +8,6 @@ public class InputScript : MonoBehaviour
 {
     public GameObject gameManager;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-    }
-
     // Update is called once per frame
     void Update()
     {
@@ -27,9 +22,6 @@ public class InputScript : MonoBehaviour
     //Finds what object is being selected
     void Select(Vector2 pos)
     {
-        //Declare variables
-        RaycastHit hit;
-
         //casts a ray from camera to mouse position/tap
         Ray ray = Camera.main.ScreenPointToRay(pos);
 
@@ -40,15 +32,8 @@ public class InputScript : MonoBehaviour
         }
 
         //Checks if the ray connects with an object/asset
-        if (Physics.Raycast(ray, out hit))
+        if (Physics.Raycast(ray, out RaycastHit hit))
         {
-            ////checks what type of tile is selected
-            //if (hit.collider.gameObject.GetComponent<ObjectInfo>().GetObjectType() == ObjectInfo.ObjectType.EMPTY)
-            //{
-            //    gameManager.GetComponent<MarketplaceSpawner>().SpawnMenu();
-            //    selecting = false;
-            //}
-
             gameManager.GetComponent<Economy>().MinusMoney(10);
 
             Debug.Log("Raycast complete: " + hit.collider.name);

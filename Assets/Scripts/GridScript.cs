@@ -11,11 +11,15 @@ public class GridScript : MonoBehaviour
 
     //initial tile to be placed on grid
     public GameObject gridSquare;
+    public GameObject ObjectManager;
 
     //list of tiles on grid
     List<GameObject> gridSquares = new List<GameObject>();
 
-    //create grid
+    //getter
+    public List<GameObject> GetGrid() { return gridSquares; }
+
+    //create grid with spacing
     public void CreateGrid()
     {
         //Declares variable
@@ -48,7 +52,21 @@ public class GridScript : MonoBehaviour
     //creates individual tiles, setting ID and types
     void CreateSquare(Vector3 pos, int ID)
     {
-        gridSquares.Add((GameObject)Instantiate(gridSquare, pos, Quaternion.identity));
+
+        if(ID == 2)
+        {
+            gridSquares.Add((GameObject)Instantiate(Resources.Load("Prefabs/Melter"), pos, Quaternion.identity));
+        }
+        else if(ID == 20)
+        {
+            gridSquares.Add((GameObject)Instantiate(Resources.Load("Prefabs/Presser"), new Vector3(pos.x, pos.y + 0.35f, pos.z - 0.5f), Quaternion.Euler(0.0f, 180.0f, 0.0f)));
+        }
+        else
+        {
+            gridSquares.Add((GameObject)Instantiate(gridSquare, pos, Quaternion.identity));
+        }
+
+        ObjectManager.GetComponent<ObjectInfoGatherer>().AddToList(gridSquares[ID].GetComponent<ObjectInfo>().GetObjectType());
     }
 
     private void Start()
