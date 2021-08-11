@@ -9,6 +9,10 @@ public class TextScript : MonoBehaviour
     //Declares UI variables
     public TextMeshProUGUI moneyText;
     public TextMeshProUGUI fpsText;
+    public TextMeshProUGUI operationalCostText;
+    public TextMeshProUGUI maintenanceCostText;
+
+    public GameObject objectManager;
 
     public float FPS;
 
@@ -19,5 +23,11 @@ public class TextScript : MonoBehaviour
         //translates into strings to be displayed
         moneyText.text = GetComponent<Economy>().GetMoney().ToString();
         fpsText.text = ("FPS: " + FPS.ToString());
+    }
+
+    public void UpdateQuarterlyText()
+    {
+        operationalCostText.text = "£ " + objectManager.GetComponent<ObjectInfoGatherer>().GetTotalOperationCost().ToString();
+        maintenanceCostText.text = "£ " + objectManager.GetComponent<ObjectInfoGatherer>().GetTotalMaintenanceCost().ToString();
     }
 }

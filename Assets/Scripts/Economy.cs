@@ -17,8 +17,8 @@ public class Economy : MonoBehaviour
     public int GetMoney() { return money; }
     public void SetMoney(int mon) { money = mon; }
 
-    public float spendTime;
-    public float gainTime;
+    float spendTime;
+    float gainTime;
 
     // Start is called before the first frame update
     void Start()
@@ -58,9 +58,10 @@ public class Economy : MonoBehaviour
 
             //pauses any time.deltaTime related issues in game
             quarterlyMenu.SetActive(true);
+            GetComponent<TextScript>().UpdateQuarterlyText();
+
             Time.timeScale = 0;
         }
-
     }
 
     //Add money
