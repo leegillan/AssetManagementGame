@@ -6,6 +6,9 @@ public class Economy : MonoBehaviour
 {
     //public variable to set in inspector
     public GameObject gameManager;
+    public GameObject objectManager;
+
+    public GameObject quarterlyMenu;
 
     //Declare money variable
     public int money;
@@ -14,8 +17,8 @@ public class Economy : MonoBehaviour
     public int GetMoney() { return money; }
     public void SetMoney(int mon) { money = mon; }
 
-    float spendTime;
-    float gainTime;
+    public float spendTime;
+    public float gainTime;
 
     // Start is called before the first frame update
     void Start()
@@ -35,14 +38,27 @@ public class Economy : MonoBehaviour
             MinusMoney(100);
         }
 
-        //Yearly/Quarterly earnings added to budget
+        //Yearly/Quarterly earnings added/taken to/from budget
         gainTime += Time.deltaTime;
 
-        if (gainTime > 20)
+        if (gainTime > 10)
         {
             gainTime = 0;
 
+                //Edit budget amount
+            int opCost = objectManager.GetComponent<ObjectInfoGatherer>().GetTotalOperationCost();
+
+            MinusMoney(opCost);
+
+            Debug.Log("Operational Cost for the quarter: " + opCost);
+
             AddMoney(1000);
+
+            Debug.Log("Profit for the quarter: " + 1000);
+
+            //pauses any time.deltaTime related issues in game
+            quarterlyMenu.SetActive(true);
+            Time.timeScale = 0;
         }
 
     }
