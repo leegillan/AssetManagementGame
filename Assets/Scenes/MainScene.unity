@@ -2242,6 +2242,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameManager: {fileID: 1723065723}
+  cameraSpeed: 15
+  Boundary: 0
 --- !u!114 &1723065728
 MonoBehaviour:
   m_ObjectHideFlags: 0
