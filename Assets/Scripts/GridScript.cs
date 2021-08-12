@@ -7,7 +7,7 @@ public class GridScript : MonoBehaviour
     //Declare variables for grid dimensions and layout
     public float xStart, yStart;
     public int columnLength, rowLength;
-    public int xSpacing, zSpacing;
+    public float xSpacing, zSpacing;
 
     //initial tile to be placed on grid
     public GameObject gridSquare;
@@ -61,12 +61,18 @@ public class GridScript : MonoBehaviour
         {
             gridSquares.Add((GameObject)Instantiate(Resources.Load("Prefabs/Presser"), new Vector3(pos.x, pos.y + 0.35f, pos.z - 0.5f), Quaternion.Euler(0.0f, 180.0f, 0.0f)));
         }
+        else if (ID == 30)
+        {
+            gridSquares.Add((GameObject)Instantiate(Resources.Load("Prefabs/Presser"), new Vector3(pos.x, pos.y + 0.35f, pos.z - 0.5f), Quaternion.Euler(0.0f, 180.0f, 0.0f)));
+        }
         else
         {
             gridSquares.Add((GameObject)Instantiate(gridSquare, pos, Quaternion.identity));
         }
 
         ObjectManager.GetComponent<ObjectInfoGatherer>().AddToList(gridSquares[ID].GetComponent<ObjectInfo>().GetObjectType());
+        ObjectManager.GetComponent<ObjectInfoGatherer>().AddToTotalOperationalCost(gridSquares[ID].GetComponent<ObjectInfo>().GetOperationalCost());
+        ObjectManager.GetComponent<ObjectInfoGatherer>().AddToTotalMaintenanceCost(gridSquares[ID].GetComponent<ObjectInfo>().GetMaintenanceCost());
     }
 
     private void Start()

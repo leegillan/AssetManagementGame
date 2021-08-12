@@ -12,7 +12,18 @@ public class ObjectCountInfo
 public class ObjectInfoGatherer : MonoBehaviour
 {
     [SerializeField] private ObjectCountInfo[] countInfo;
-    
+
+    [SerializeField] private int totalOperationCost;
+    [SerializeField] private int totalMaintenanceCost;
+
+    //getter
+    public int GetTotalOperationCost() { return totalOperationCost; }
+    public int GetTotalMaintenanceCost() { return totalMaintenanceCost; }
+
+    //add to totals
+    public void AddToTotalOperationalCost(int oC) { totalOperationCost += oC; }
+    public void AddToTotalMaintenanceCost(int mC) { totalMaintenanceCost += mC; }
+
     public void AddToList(ObjectInfo.TYPE objectType)
     {
         if (objectType == ObjectInfo.TYPE.NONE)
