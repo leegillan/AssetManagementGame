@@ -36,6 +36,14 @@ public class InputScript : MonoBehaviour
             Select(Input.mousePosition);
         }
 
+        //escape key for pause menu
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Debug.Log("Escape key was pressed");
+            GetComponent<PauseScript>().PauseGame();
+            GetComponent<PauseMenuScript>().PauseMenuVisual.SetActive(true);
+        }
+
         //checks if player can move camera
         if (canMove == true)
         {

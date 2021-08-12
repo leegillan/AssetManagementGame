@@ -60,7 +60,7 @@ public class Economy : MonoBehaviour
             quarterlyMenu.SetActive(true);
             GetComponent<TextScript>().UpdateQuarterlyText();
 
-            Time.timeScale = 0;
+            GetComponent<PauseScript>().PauseGame();
         }
     }
 
