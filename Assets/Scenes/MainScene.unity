@@ -2180,6 +2180,7 @@ GameObject:
   - component: {fileID: 1723065727}
   - component: {fileID: 1723065728}
   - component: {fileID: 1723065724}
+  - component: {fileID: 1723065729}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -2243,7 +2244,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameManager: {fileID: 1723065723}
   cameraSpeed: 15
-  Boundary: 0
+  Boundary: 150
 --- !u!114 &1723065728
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2262,6 +2263,18 @@ MonoBehaviour:
   maintenanceCostText: {fileID: 383843434}
   objectManager: {fileID: 1842996180}
   FPS: 0
+--- !u!114 &1723065729
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1723065723}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c423bf2cff541904faa31d6fb282626f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1842996180
 GameObject:
   m_ObjectHideFlags: 0

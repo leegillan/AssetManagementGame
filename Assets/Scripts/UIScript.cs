@@ -8,6 +8,6 @@ public class UIScript : MonoBehaviour
     //Continue game at normal speed
     public void ResumeGame()
     {
-        Time.timeScale = 1;
+        GetComponent<PauseScript>().UnPauseGame();
     }
 }
