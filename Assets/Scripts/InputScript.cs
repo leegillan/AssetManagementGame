@@ -81,6 +81,9 @@ public class InputScript : MonoBehaviour
             {
                 MoveUp(Time.deltaTime * cameraSpeed); // move on -Z axis
             }
+
+            if (Input.mousePosition.x > theScreenWidth || Input.mousePosition.x < 0 || Input.mousePosition.y > theScreenHeight || Input.mousePosition.y < 0) { GetComponent<PauseScript>().PauseGame(); }
+            else { GetComponent<PauseScript>().UnPauseGame(); }
         }
     }
 
