@@ -24,7 +24,7 @@ public class ObjectInfoGatherer : MonoBehaviour
     public void AddToTotalOperationalCost(int oC) { totalOperationCost += oC; }
     public void AddToTotalMaintenanceCost(int mC) { totalMaintenanceCost += mC; }
 
-    public void AddToList(ObjectInfo.TYPE objectType)
+    public void AddToObjectList(ObjectInfo.TYPE objectType)
     {
         if (objectType == ObjectInfo.TYPE.NONE)
         {
