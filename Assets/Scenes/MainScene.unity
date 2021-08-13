@@ -2720,7 +2720,13 @@ MonoBehaviour:
   zSpacing: 2.3
   gridSquare: {fileID: 8270362907156975660, guid: 226e70a90aea1a64ababc2adefa1bdb3,
     type: 3}
-  ObjectManager: {fileID: 1842996180}
+  definedLocations:
+  - type: 2
+    gridLocationID: 140000001e00000028000000320000003c000000
+    spawned: 0101000000
+  - type: 1
+    gridLocationID: 0200000003000000040000000500000006000000
+    spawned: 0100000000
 --- !u!4 &1842996182
 Transform:
   m_ObjectHideFlags: 0
