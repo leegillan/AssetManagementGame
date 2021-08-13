@@ -39,7 +39,6 @@ public class InputScript : MonoBehaviour
         //escape key for pause menu
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            Debug.Log("Escape key was pressed");
             GetComponent<PauseScript>().PauseGame();
             GetComponent<PauseMenuScript>().PauseMenuVisual.SetActive(true);
         }
