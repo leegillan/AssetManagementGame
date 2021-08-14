@@ -33,8 +33,8 @@ public class GridScript : MonoBehaviour
     public void AddGridTile(GameObject ob) { gridSquares.Add(ob); }
 
     //Defined grid location variables and getter
-    [SerializeField] List<DefinedGridLocations> definedLocations;
-    public List<DefinedGridLocations> GetDefinedGridLocations() { return definedLocations; }
+    [SerializeField] List<DefinedGridLocations> definedGridLocations;
+    public List<DefinedGridLocations> GetDefinedGridLocations() { return definedGridLocations; }
 
     private void Start()
     {
@@ -45,12 +45,12 @@ public class GridScript : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.K))
         {
-            CheckAvailablePositions(ObjectInfo.TYPE.PRESSER, GetDefinedGridLocations());
+            CheckAvailablePositions(ObjectInfo.TYPE.PRESSER);
         }
 
         if (Input.GetKeyDown(KeyCode.L))
         {
-            CheckAvailablePositions(ObjectInfo.TYPE.MELTER, GetDefinedGridLocations());
+            CheckAvailablePositions(ObjectInfo.TYPE.MELTER);
         }
     }
 
@@ -154,6 +154,10 @@ public class GridScript : MonoBehaviour
 
         //Add from list
         AddGridTile(newAsset);
+
+        GetComponent<ObjectInfoGatherer>().AddToObjectList(newAsset.GetComponent<ObjectInfo>().GetObjectType());
+        GetComponent<ObjectInfoGatherer>().AddToTotalOperationalCost(newAsset.GetComponent<ObjectInfo>().GetOperationalCost());
+        GetComponent<ObjectInfoGatherer>().AddToTotalMaintenanceCost(newAsset.GetComponent<ObjectInfo>().GetMaintenanceCost());
     }
 
     public GameObject LoadAsset(ObjectInfo.TYPE type, Transform transform)//load asset based on type
@@ -176,7 +180,7 @@ public class GridScript : MonoBehaviour
     }
 
     //Checks availability by looping through the list of defined grid locations for each type of object
-    public void CheckAvailablePositions(ObjectInfo.TYPE type, List<DefinedGridLocations> definedGridLocations)
+    public void CheckAvailablePositions(ObjectInfo.TYPE type)
     {
         for (int i = 0; i < definedGridLocations.Count; i++)
         {
