@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class UIScript : MonoBehaviour
 {
+    public GameObject marketplaceMenu;
+
     //Continue game at normal speed
     public void ResumeGame()
     {

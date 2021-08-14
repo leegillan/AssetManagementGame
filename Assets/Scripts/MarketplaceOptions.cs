@@ -9,4 +9,10 @@ public class MarketplaceOptions : MonoBehaviour
     //Type variable and getter
     public ObjectInfo.TYPE type;
     public ObjectInfo.TYPE GetOptType() { return type; }
+    
+    //marketplace buy button function
+    public void BuyAsset()
+    {
+        objectManager.GetComponent<GridScript>().CheckAvailablePositions(type);
+    }
 }

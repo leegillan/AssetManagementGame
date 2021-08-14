@@ -43,6 +43,20 @@ public class InputScript : MonoBehaviour
             GetComponent<PauseMenuScript>().PauseMenuVisual.SetActive(true);
         }
 
+        //escape key for pause menu
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            if(GetComponent<UIScript>().marketplaceMenu.activeSelf == false)
+            {
+                GetComponent<UIScript>().marketplaceMenu.SetActive(true);
+            }
+            else
+            {
+                GetComponent<UIScript>().marketplaceMenu.SetActive(false);
+            }
+            
+        }
+
         //checks if player can move camera
         if (canMove == true)
         {
@@ -82,8 +96,11 @@ public class InputScript : MonoBehaviour
                 MoveUp(Time.deltaTime * cameraSpeed); // move on -Z axis
             }
 
+            ///Continously unpausing the game - will have to find a more efficient way for doing this
+            ///
             if (Input.mousePosition.x > theScreenWidth || Input.mousePosition.x < 0 || Input.mousePosition.y > theScreenHeight || Input.mousePosition.y < 0) { GetComponent<PauseScript>().PauseGame(); }
             else { GetComponent<PauseScript>().UnPauseGame(); }
+            ///
         }
     }
 
