@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
-public class UIScript : MonoBehaviour
+public class PauseMenuScript : MonoBehaviour
 {
-    public GameObject marketplaceMenu;
+    public GameObject PauseMenuVisual;
 
-    //Continue game at normal speed
     public void ResumeGame()
     {
         GetComponent<PauseScript>().UnPauseGame();
