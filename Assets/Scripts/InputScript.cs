@@ -72,19 +72,19 @@ public class InputScript : MonoBehaviour
         if (canMove == true)
         {
             //if player is poressing W, A, S, or D then the camera moves depending on function call
-            if (Input.GetKey("s") && Camera.main.transform.position.z <= 41 && Camera.main.transform.position.x <= 58)
+            if (Input.GetKey("s"))
             {
                 MoveUp(Time.deltaTime * cameraSpeed);
             }
-            if (Input.GetKey("w") && Camera.main.transform.position.z >= -15 && Camera.main.transform.position.x >= -16)
+            if (Input.GetKey("w"))
             {
                 MoveDown(Time.deltaTime * cameraSpeed);
             }
-            if (Input.GetKey("a") && Camera.main.transform.position.z >= -15 && Camera.main.transform.position.x <= 58)
+            if (Input.GetKey("a"))
             {
                 MoveLeft(Time.deltaTime * cameraSpeed);
             }
-            if (Input.GetKey("d") && Camera.main.transform.position.z <= 41 && Camera.main.transform.position.x >= -16)
+            if (Input.GetKey("d"))
             {
                 MoveRight(Time.deltaTime * cameraSpeed);
             }
