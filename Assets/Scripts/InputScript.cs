@@ -14,6 +14,7 @@ public class InputScript : MonoBehaviour
 
     //Camera Movement Variables
     bool canMove = true; //TEMPORARY, WILL UPDATE DURING GAMEPLAY
+    public bool isPaused = false;
 
 
     private int theScreenWidth;
@@ -39,8 +40,16 @@ public class InputScript : MonoBehaviour
         //escape key for pause menu
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            GetComponent<PauseScript>().PauseGame();
-            GetComponent<PauseMenuScript>().PauseMenuVisual.SetActive(true);
+            if (!isPaused)
+            {
+                GetComponent<PauseScript>().PauseGame();
+                GetComponent<PauseMenuScript>().PauseMenuVisual.SetActive(true);
+            }
+			else
+			{
+                GetComponent<PauseScript>().UnPauseGame();
+                GetComponent<PauseMenuScript>().PauseMenuVisual.SetActive(false);
+            }
         }
 
         //escape key for pause menu
@@ -61,19 +70,19 @@ public class InputScript : MonoBehaviour
         if (canMove == true)
         {
             //if player is poressing W, A, S, or D then the camera moves depending on function call
-            if (Input.GetKey("s") && Camera.main.transform.position.z <= 41 && Camera.main.transform.position.x <= 58)
+            if (Input.GetKey("s"))
             {
                 MoveUp(Time.deltaTime * cameraSpeed);
             }
-            if (Input.GetKey("w") && Camera.main.transform.position.z >= -15 && Camera.main.transform.position.x >= -16)
+            if (Input.GetKey("w"))
             {
                 MoveDown(Time.deltaTime * cameraSpeed);
             }
-            if (Input.GetKey("a") && Camera.main.transform.position.z >= -15 && Camera.main.transform.position.x <= 58)
+            if (Input.GetKey("a"))
             {
                 MoveLeft(Time.deltaTime * cameraSpeed);
             }
-            if (Input.GetKey("d") && Camera.main.transform.position.z <= 41 && Camera.main.transform.position.x >= -16)
+            if (Input.GetKey("d"))
             {
                 MoveRight(Time.deltaTime * cameraSpeed);
             }
@@ -98,8 +107,8 @@ public class InputScript : MonoBehaviour
 
             ///Continously unpausing the game - will have to find a more efficient way for doing this
             ///
-            if (Input.mousePosition.x > theScreenWidth || Input.mousePosition.x < 0 || Input.mousePosition.y > theScreenHeight || Input.mousePosition.y < 0) { GetComponent<PauseScript>().PauseGame(); }
-            else { GetComponent<PauseScript>().UnPauseGame(); }
+            if (Input.mousePosition.x > theScreenWidth || Input.mousePosition.x < 0 || Input.mousePosition.y > theScreenHeight || Input.mousePosition.y < 0) { Time.timeScale = 0; }
+            else if(!isPaused){ GetComponent<PauseScript>().UnPauseGame(); }
             ///
         }
     }

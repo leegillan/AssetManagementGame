@@ -18,7 +18,7 @@ public class Economy : MonoBehaviour
     public void SetMoney(int mon) { money = mon; }
 
     float spendTime;
-    bool quarterDone;
+    float gainTime;
 
     // Start is called before the first frame update
     void Start()
@@ -30,7 +30,7 @@ public class Economy : MonoBehaviour
     {
         //Expenditure and Operation/Maintenance costs getting taken away from budget
         spendTime += Time.deltaTime;
-
+        
         if (spendTime > 5)
         {
             spendTime = 0;
@@ -38,35 +38,30 @@ public class Economy : MonoBehaviour
             MinusMoney(100);
         }
 
-        if (!quarterDone) 
-        {
-            int i = (int)GetComponent<CalendarScript>().getMonth();
+        //Yearly/Quarterly earnings added/taken to/from budget
+        gainTime += Time.deltaTime;
 
-            //Yearly/Quarterly earnings added/taken to/from budget
-            if((GetComponent<CalendarScript>().getDate() == 1) && ((i - 1) % 3 == 0))
-            {
-                quarterDone = true;
+        if (gainTime > 10)
+        {
+            gainTime = 0;
 
                 //Edit budget amount
-                int opCost = objectManager.GetComponent<ObjectInfoGatherer>().GetTotalOperationCost();
+            int opCost = objectManager.GetComponent<ObjectInfoGatherer>().GetTotalOperationCost();
 
-                MinusMoney(opCost);
+            MinusMoney(opCost);
 
-                Debug.Log("Operational Cost for the quarter: " + opCost);
+            Debug.Log("Operational Cost for the quarter: " + opCost);
 
-                AddMoney(1000);
+            AddMoney(1000);
 
-                Debug.Log("Profit for the quarter: " + 1000);
+            Debug.Log("Profit for the quarter: " + 1000);
 
-                //pauses any time.deltaTime related issues in game
-                quarterlyMenu.SetActive(true);
-                GetComponent<TextScript>().UpdateQuarterlyText();
+            //pauses any time.deltaTime related issues in game
+            quarterlyMenu.SetActive(true);
+            GetComponent<TextScript>().UpdateQuarterlyText();
 
-                GetComponent<PauseScript>().PauseGame();
-            }
+            GetComponent<PauseScript>().PauseGame();
         }
-
-        if (GetComponent<CalendarScript>().getDate() == 2){ quarterDone = false; }
     }
 
     //Add money
