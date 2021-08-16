@@ -14,6 +14,7 @@ public class InputScript : MonoBehaviour
 
     //Camera Movement Variables
     bool canMove = true; //TEMPORARY, WILL UPDATE DURING GAMEPLAY
+    public bool isPaused = false;
 
 
     private int theScreenWidth;
@@ -39,8 +40,18 @@ public class InputScript : MonoBehaviour
         //escape key for pause menu
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            GetComponent<PauseScript>().PauseGame();
-            GetComponent<PauseMenuScript>().PauseMenuVisual.SetActive(true);
+            if (!isPaused)
+            {
+                isPaused = true;
+                GetComponent<PauseScript>().PauseGame();
+                GetComponent<PauseMenuScript>().PauseMenuVisual.SetActive(true);
+            }
+			else
+			{
+                isPaused = false;
+                GetComponent<PauseScript>().UnPauseGame();
+                GetComponent<PauseMenuScript>().PauseMenuVisual.SetActive(false);
+            }
         }
 
         //escape key for pause menu
