@@ -128,9 +128,14 @@ public class InputScript : MonoBehaviour
         //Checks if the ray connects with an object/asset
         if (Physics.Raycast(ray, out RaycastHit hit))
         {
-            gameManager.GetComponent<Economy>().MinusMoney(10);
+            if(hit.collider.TryGetComponent(out ClickableObject cB))
+            {
+                gameManager.GetComponent<UIScript>().statMenu.SetActive(true);
 
-            Debug.Log("Raycast complete: " + hit.collider.name);
+
+                //gathger stats of object using grid id?
+                //or hit.getcomponent?
+            }
         }
     }
 

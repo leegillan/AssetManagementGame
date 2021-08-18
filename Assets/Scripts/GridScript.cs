@@ -152,7 +152,7 @@ public class GridScript : MonoBehaviour
         //Remove from list
         RemoveGridTile(newAsset);
 
-        //Add from list
+        //Add to list
         AddGridTile(newAsset);
 
         GetComponent<ObjectInfoGatherer>().AddToObjectList(newAsset.GetComponent<ObjectInfo>().GetObjectType());
