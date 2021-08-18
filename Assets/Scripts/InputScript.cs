@@ -7,6 +7,7 @@ using UnityEngine.EventSystems;
 public class InputScript : MonoBehaviour
 {
     public GameObject gameManager;
+    public GameObject objectManager;
 
     //Camera variables
     public float cameraSpeed;
@@ -130,8 +131,9 @@ public class InputScript : MonoBehaviour
         {
             if(hit.collider.TryGetComponent(out ClickableObject cB))
             {
-                gameManager.GetComponent<UIScript>().statMenu.SetActive(true);
+                objectManager.GetComponent<GridScript>().SetSelectedTile(hit.collider.gameObject);
 
+                gameManager.GetComponent<UIScript>().statMenu.SetActive(true);
 
                 //gathger stats of object using grid id?
                 //or hit.getcomponent?
