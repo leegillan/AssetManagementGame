@@ -42,13 +42,11 @@ public class InputScript : MonoBehaviour
         {
             if (!isPaused)
             {
-                isPaused = true;
                 GetComponent<PauseScript>().PauseGame();
                 GetComponent<PauseMenuScript>().PauseMenuVisual.SetActive(true);
             }
 			else
 			{
-                isPaused = false;
                 GetComponent<PauseScript>().UnPauseGame();
                 GetComponent<PauseMenuScript>().PauseMenuVisual.SetActive(false);
             }
@@ -109,8 +107,8 @@ public class InputScript : MonoBehaviour
 
             ///Continously unpausing the game - will have to find a more efficient way for doing this
             ///
-            if (Input.mousePosition.x > theScreenWidth || Input.mousePosition.x < 0 || Input.mousePosition.y > theScreenHeight || Input.mousePosition.y < 0) { GetComponent<PauseScript>().PauseGame(); }
-            else { GetComponent<PauseScript>().UnPauseGame(); }
+            if (Input.mousePosition.x > theScreenWidth || Input.mousePosition.x < 0 || Input.mousePosition.y > theScreenHeight || Input.mousePosition.y < 0) { Time.timeScale = 0; }
+            else if(!isPaused){ GetComponent<PauseScript>().UnPauseGame(); }
             ///
         }
     }
