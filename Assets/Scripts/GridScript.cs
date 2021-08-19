@@ -12,6 +12,8 @@ public class DefinedGridLocations
 
 public class GridScript : MonoBehaviour
 {
+    public GameObject gameManager;
+
     //Declare variables for grid dimensions and layout
     public float xStart, yStart;
     public int columnLength, rowLength;
@@ -54,6 +56,7 @@ public class GridScript : MonoBehaviour
             GetComponent<ObjectInfoGatherer>().UpdateTotalMaintenanceCost(-selectedTile.GetComponent<ObjectInfo>().GetMaintenanceCost());
             //need to update list of objects aswell
 
+            //gets rid of old asset
             UpdateAvailablePositions(selectedTile.GetComponent<ObjectInfo>().GetObjectType(), selectedTile.GetComponent<ObjectInfo>().GetObjectID());
         }
     }
@@ -207,6 +210,8 @@ public class GridScript : MonoBehaviour
     //Checks availability by looping through the list of defined grid locations for each type of object
     public void UpdateAvailablePositions(ObjectInfo.TYPE type)
     {
+        Data obData = GetComponent<ObjectData>().GetObjectData(type);
+
         for (int i = 0; i < definedGridLocations.Count; i++)
         {
             if(definedGridLocations[i].type == type)
@@ -215,7 +220,13 @@ public class GridScript : MonoBehaviour
                 {
                     if (definedGridLocations[i].spawned[j] == false)
                     {
+                        //take money away for buying equipment
+                        gameManager.GetComponent<Economy>().UpdateMoney(-obData.purchaseCost);
+
+                        //changes old to new assets
                         ChangeAsset(definedGridLocations[i].gridLocationID[j], type);
+
+                        //sets boolean to true for further checks
                         definedGridLocations[i].spawned[j] = true;
 
                         return;
@@ -225,9 +236,11 @@ public class GridScript : MonoBehaviour
         }
     }
     
-    //Checks availability by looping through the list of defined grid locations for each type of object
+    //Checks for the object selected to be in the list to get changed back to the default grid object
     public void UpdateAvailablePositions(ObjectInfo.TYPE type, int gridID)
     {
+        Data obData = GetComponent<ObjectData>().GetObjectData(type);
+
         for (int i = 0; i < definedGridLocations.Count; i++)
         {
             if(definedGridLocations[i].type == type)
@@ -236,7 +249,13 @@ public class GridScript : MonoBehaviour
                 {
                     if (definedGridLocations[i].spawned[j] == true && definedGridLocations[i].gridLocationID[j] == gridID)
                     {
+                        //add money for selling equipment
+                        gameManager.GetComponent<Economy>().UpdateMoney(obData.purchaseCost - 500);
+
+                        //changes old to new assets
                         ChangeAsset(definedGridLocations[i].gridLocationID[j], ObjectInfo.TYPE.NONE);
+
+                        //sets boolean to false for further checks
                         definedGridLocations[i].spawned[j] = false;
 
                         return;

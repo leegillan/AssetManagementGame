@@ -3954,6 +3954,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f578dae0a08c1d47a35accf79787db1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameManager: {fileID: 1723065723}
   xStart: -10
   yStart: -10
   columnLength: 10

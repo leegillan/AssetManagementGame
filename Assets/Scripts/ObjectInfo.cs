@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class ObjectInfo : MonoBehaviour
 {
+    //object manager
+    public GameObject objectManager;
+
     //Grid ID of object
     public int ID;
 
@@ -22,6 +25,7 @@ public class ObjectInfo : MonoBehaviour
     public int cost;
     public int maintenanceCost;
     public int operationalCost;
+    public float health = 100.0f;
 
     //getters
     public TYPE GetObjectType() { return objectType; }

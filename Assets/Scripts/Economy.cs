@@ -73,13 +73,6 @@ public class Economy : MonoBehaviour
     public void UpdateMoney(int m)
     {
         //Update money value with passed value +/-
-        money = money + m;
-    }
-
-    //takeaway money
-    public void MinusMoney(int m)
-    {
-        //add money value
-        money = money - m;
+        money +=  m;
     }
 }
