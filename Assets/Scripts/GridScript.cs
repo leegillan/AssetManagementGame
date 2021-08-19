@@ -49,6 +49,11 @@ public class GridScript : MonoBehaviour
     {
         if (selectedTile)
         {
+            //minus the cost from the total costs that get shown in the quarterly menu
+            GetComponent<ObjectInfoGatherer>().UpdateTotalOperationalCost(-selectedTile.GetComponent<ObjectInfo>().GetOperationalCost());
+            GetComponent<ObjectInfoGatherer>().UpdateTotalMaintenanceCost(-selectedTile.GetComponent<ObjectInfo>().GetMaintenanceCost());
+            //need to update list of objects aswell
+
             UpdateAvailablePositions(selectedTile.GetComponent<ObjectInfo>().GetObjectType(), selectedTile.GetComponent<ObjectInfo>().GetObjectID());
         }
     }
@@ -124,8 +129,8 @@ public class GridScript : MonoBehaviour
         gridSquares[ID].GetComponent<ObjectInfo>().SetObjectID(ID);
 
         GetComponent<ObjectInfoGatherer>().AddToObjectList(gridSquares[ID].GetComponent<ObjectInfo>().GetObjectType());
-        GetComponent<ObjectInfoGatherer>().AddToTotalOperationalCost(gridSquares[ID].GetComponent<ObjectInfo>().GetOperationalCost());
-        GetComponent<ObjectInfoGatherer>().AddToTotalMaintenanceCost(gridSquares[ID].GetComponent<ObjectInfo>().GetMaintenanceCost());
+        GetComponent<ObjectInfoGatherer>().UpdateTotalOperationalCost(gridSquares[ID].GetComponent<ObjectInfo>().GetOperationalCost());
+        GetComponent<ObjectInfoGatherer>().UpdateTotalMaintenanceCost(gridSquares[ID].GetComponent<ObjectInfo>().GetMaintenanceCost());
     }
 
     //Gets grid tile from ID of tile
@@ -176,8 +181,8 @@ public class GridScript : MonoBehaviour
         AddGridTile(newAsset);
 
         GetComponent<ObjectInfoGatherer>().AddToObjectList(newAsset.GetComponent<ObjectInfo>().GetObjectType());
-        GetComponent<ObjectInfoGatherer>().AddToTotalOperationalCost(newAsset.GetComponent<ObjectInfo>().GetOperationalCost());
-        GetComponent<ObjectInfoGatherer>().AddToTotalMaintenanceCost(newAsset.GetComponent<ObjectInfo>().GetMaintenanceCost());
+        GetComponent<ObjectInfoGatherer>().UpdateTotalOperationalCost(newAsset.GetComponent<ObjectInfo>().GetOperationalCost());
+        GetComponent<ObjectInfoGatherer>().UpdateTotalMaintenanceCost(newAsset.GetComponent<ObjectInfo>().GetMaintenanceCost());
     }
 
     public GameObject LoadAsset(ObjectInfo.TYPE type, Transform transform)//load asset based on type
