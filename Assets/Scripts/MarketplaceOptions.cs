@@ -5,6 +5,7 @@ using UnityEngine;
 public class MarketplaceOptions : MonoBehaviour
 {
     public GameObject objectManager;
+    public GameObject gameManager;
 
     //Type variable and getter
     public ObjectInfo.TYPE type;
@@ -13,6 +14,12 @@ public class MarketplaceOptions : MonoBehaviour
     //marketplace buy button function
     public void BuyAsset()
     {
-        objectManager.GetComponent<GridScript>().UpdateAvailablePositions(type);
+        Data obData = objectManager.GetComponent<ObjectData>().GetObjectData(type);
+
+        if (gameManager.GetComponent<Economy>().GetMoney() >= obData.purchaseCost)
+        {
+            gameManager.GetComponent<Economy>().UpdateMoney(-obData.purchaseCost);
+            objectManager.GetComponent<GridScript>().UpdateAvailablePositions(type);
+        }
     }
 }

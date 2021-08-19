@@ -35,7 +35,7 @@ public class Economy : MonoBehaviour
         {
             spendTime = 0;
 
-            MinusMoney(100);
+            UpdateMoney(-100);
         }
 
         if (!quarterDone)
@@ -50,11 +50,11 @@ public class Economy : MonoBehaviour
                 //Edit budget amount
                 int opCost = objectManager.GetComponent<ObjectInfoGatherer>().GetTotalOperationCost();
 
-                MinusMoney(opCost);
+                UpdateMoney(-opCost);
 
                 Debug.Log("Operational Cost for the quarter: " + opCost);
 
-                AddMoney(1000);
+                UpdateMoney(1000);
 
                 Debug.Log("Profit for the quarter: " + 1000);
 
@@ -70,9 +70,9 @@ public class Economy : MonoBehaviour
     }
 
     //Add money
-    public void AddMoney(int m)
+    public void UpdateMoney(int m)
     {
-        //add money value
+        //Update money value with passed value +/-
         money = money + m;
     }
 

@@ -2497,9 +2497,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1178595148669025344, guid: 6a4f8355c225a7f439f6e531e764fd4d,
         type: 3}
+      propertyPath: gameManager
+      value: 
+      objectReference: {fileID: 1723065723}
+    - target: {fileID: 1178595148669025344, guid: 6a4f8355c225a7f439f6e531e764fd4d,
+        type: 3}
       propertyPath: objectManager
       value: 
       objectReference: {fileID: 1842996180}
+    - target: {fileID: 4761775562589371249, guid: 6a4f8355c225a7f439f6e531e764fd4d,
+        type: 3}
+      propertyPath: gameManager
+      value: 
+      objectReference: {fileID: 1723065723}
     - target: {fileID: 4761775562589371249, guid: 6a4f8355c225a7f439f6e531e764fd4d,
         type: 3}
       propertyPath: objectManager
@@ -3924,6 +3934,7 @@ GameObject:
   - component: {fileID: 1842996182}
   - component: {fileID: 1842996181}
   - component: {fileID: 1842996183}
+  - component: {fileID: 1842996184}
   m_Layer: 0
   m_Name: ObjectManager
   m_TagString: Untagged
@@ -3994,6 +4005,18 @@ MonoBehaviour:
     type: 2
   totalOperationCost: 0
   totalMaintenanceCost: 0
+--- !u!114 &1842996184
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1842996180}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4149e41dbe822849bd6a9f4556be6e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1893023064
 GameObject:
   m_ObjectHideFlags: 0
