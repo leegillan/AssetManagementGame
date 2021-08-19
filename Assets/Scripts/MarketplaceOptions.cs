@@ -13,6 +13,6 @@ public class MarketplaceOptions : MonoBehaviour
     //marketplace buy button function
     public void BuyAsset()
     {
-        objectManager.GetComponent<GridScript>().CheckAvailablePositions(type);
+        objectManager.GetComponent<GridScript>().UpdateAvailablePositions(type);
     }
 }

@@ -20,9 +20,9 @@ public class ObjectInfoGatherer : MonoBehaviour
     public int GetTotalOperationCost() { return totalOperationCost; }
     public int GetTotalMaintenanceCost() { return totalMaintenanceCost; }
 
-    //add to totals
-    public void AddToTotalOperationalCost(int oC) { totalOperationCost += oC; }
-    public void AddToTotalMaintenanceCost(int mC) { totalMaintenanceCost += mC; }
+    //Update totals
+    public void UpdateTotalOperationalCost(int oC) { totalOperationCost += oC; }
+    public void UpdateTotalMaintenanceCost(int mC) { totalMaintenanceCost += mC; }
 
     public void AddToObjectList(ObjectInfo.TYPE objectType)
     {

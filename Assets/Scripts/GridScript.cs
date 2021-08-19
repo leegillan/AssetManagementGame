@@ -19,7 +19,7 @@ public class GridScript : MonoBehaviour
 
     //initial tile to be placed on grid
     public GameObject gridSquare;
- 
+
     //list of tiles on grid
     List<GameObject> gridSquares = new List<GameObject>();
 
@@ -36,6 +36,28 @@ public class GridScript : MonoBehaviour
     [SerializeField] List<DefinedGridLocations> definedGridLocations;
     public List<DefinedGridLocations> GetDefinedGridLocations() { return definedGridLocations; }
 
+    //the tile that the player has most recently clicked on
+    [SerializeField ]private GameObject selectedTile;
+
+    //Selected Tile getter
+    public GameObject GetSelectedTile() { return selectedTile; }
+
+    //sets selected tile
+    public void SetSelectedTile(GameObject s) { selectedTile = s; }
+
+    public void SellSelectedTile()
+    {
+        if (selectedTile)
+        {
+            //minus the cost from the total costs that get shown in the quarterly menu
+            GetComponent<ObjectInfoGatherer>().UpdateTotalOperationalCost(-selectedTile.GetComponent<ObjectInfo>().GetOperationalCost());
+            GetComponent<ObjectInfoGatherer>().UpdateTotalMaintenanceCost(-selectedTile.GetComponent<ObjectInfo>().GetMaintenanceCost());
+            //need to update list of objects aswell
+
+            UpdateAvailablePositions(selectedTile.GetComponent<ObjectInfo>().GetObjectType(), selectedTile.GetComponent<ObjectInfo>().GetObjectID());
+        }
+    }
+
     private void Start()
     {
         CreateGrid();
@@ -45,12 +67,12 @@ public class GridScript : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.K))
         {
-            CheckAvailablePositions(ObjectInfo.TYPE.PRESSER);
+            UpdateAvailablePositions(ObjectInfo.TYPE.PRESSER);
         }
 
         if (Input.GetKeyDown(KeyCode.L))
         {
-            CheckAvailablePositions(ObjectInfo.TYPE.MELTER);
+            UpdateAvailablePositions(ObjectInfo.TYPE.MELTER);
         }
     }
 
@@ -93,11 +115,11 @@ public class GridScript : MonoBehaviour
         }
         else if(ID == 20)
         {
-            gridSquares.Add((GameObject)Instantiate(Resources.Load("Prefabs/Presser"), new Vector3(pos.x, pos.y + 0.35f, pos.z - 0.5f), Quaternion.Euler(0.0f, 180.0f, 0.0f)));
+            gridSquares.Add((GameObject)Instantiate(Resources.Load("Prefabs/Presser"), pos, Quaternion.identity));
         }
         else if (ID == 30)
         {
-            gridSquares.Add((GameObject)Instantiate(Resources.Load("Prefabs/Presser"), new Vector3(pos.x, pos.y + 0.35f, pos.z - 0.5f), Quaternion.Euler(0.0f, 180.0f, 0.0f)));
+            gridSquares.Add((GameObject)Instantiate(Resources.Load("Prefabs/Presser"), pos, Quaternion.identity));
         }
         else
         {
@@ -107,8 +129,8 @@ public class GridScript : MonoBehaviour
         gridSquares[ID].GetComponent<ObjectInfo>().SetObjectID(ID);
 
         GetComponent<ObjectInfoGatherer>().AddToObjectList(gridSquares[ID].GetComponent<ObjectInfo>().GetObjectType());
-        GetComponent<ObjectInfoGatherer>().AddToTotalOperationalCost(gridSquares[ID].GetComponent<ObjectInfo>().GetOperationalCost());
-        GetComponent<ObjectInfoGatherer>().AddToTotalMaintenanceCost(gridSquares[ID].GetComponent<ObjectInfo>().GetMaintenanceCost());
+        GetComponent<ObjectInfoGatherer>().UpdateTotalOperationalCost(gridSquares[ID].GetComponent<ObjectInfo>().GetOperationalCost());
+        GetComponent<ObjectInfoGatherer>().UpdateTotalMaintenanceCost(gridSquares[ID].GetComponent<ObjectInfo>().GetMaintenanceCost());
     }
 
     //Gets grid tile from ID of tile
@@ -150,14 +172,17 @@ public class GridScript : MonoBehaviour
         newAsset.GetComponent<ObjectInfo>().SetObjectID(id);
 
         //Remove from list
-        RemoveGridTile(newAsset);
+        RemoveGridTile(oldAsset);
+
+        //Destroy shape to be replaced
+        GameObject.Destroy(oldAsset);
 
         //Add to list
         AddGridTile(newAsset);
 
         GetComponent<ObjectInfoGatherer>().AddToObjectList(newAsset.GetComponent<ObjectInfo>().GetObjectType());
-        GetComponent<ObjectInfoGatherer>().AddToTotalOperationalCost(newAsset.GetComponent<ObjectInfo>().GetOperationalCost());
-        GetComponent<ObjectInfoGatherer>().AddToTotalMaintenanceCost(newAsset.GetComponent<ObjectInfo>().GetMaintenanceCost());
+        GetComponent<ObjectInfoGatherer>().UpdateTotalOperationalCost(newAsset.GetComponent<ObjectInfo>().GetOperationalCost());
+        GetComponent<ObjectInfoGatherer>().UpdateTotalMaintenanceCost(newAsset.GetComponent<ObjectInfo>().GetMaintenanceCost());
     }
 
     public GameObject LoadAsset(ObjectInfo.TYPE type, Transform transform)//load asset based on type
@@ -172,7 +197,7 @@ public class GridScript : MonoBehaviour
                 return (GameObject)Instantiate(Resources.Load("Prefabs/Melter"), transform.position, Quaternion.identity);
 
             case ObjectInfo.TYPE.PRESSER:
-                return (GameObject)Instantiate(Resources.Load("Prefabs/Presser"), new Vector3(transform.position.x, transform.position.y + 0.35f, transform.position.z - 0.5f), Quaternion.Euler(0.0f, 180.0f, 0.0f));
+                return (GameObject)Instantiate(Resources.Load("Prefabs/Presser"), transform.position, Quaternion.identity);
 
             default:
                 return null;
@@ -180,7 +205,7 @@ public class GridScript : MonoBehaviour
     }
 
     //Checks availability by looping through the list of defined grid locations for each type of object
-    public void CheckAvailablePositions(ObjectInfo.TYPE type)
+    public void UpdateAvailablePositions(ObjectInfo.TYPE type)
     {
         for (int i = 0; i < definedGridLocations.Count; i++)
         {
@@ -188,10 +213,31 @@ public class GridScript : MonoBehaviour
             {
                 for (int j = 0; j < definedGridLocations[i].spawned.Count; j++)
                 {
-                    if(definedGridLocations[i].spawned[j] == false)
+                    if (definedGridLocations[i].spawned[j] == false)
                     {
                         ChangeAsset(definedGridLocations[i].gridLocationID[j], type);
                         definedGridLocations[i].spawned[j] = true;
+
+                        return;
+                    }
+                }
+            }
+        }
+    }
+    
+    //Checks availability by looping through the list of defined grid locations for each type of object
+    public void UpdateAvailablePositions(ObjectInfo.TYPE type, int gridID)
+    {
+        for (int i = 0; i < definedGridLocations.Count; i++)
+        {
+            if(definedGridLocations[i].type == type)
+            {
+                for (int j = 0; j < definedGridLocations[i].spawned.Count; j++)
+                {
+                    if (definedGridLocations[i].spawned[j] == true && definedGridLocations[i].gridLocationID[j] == gridID)
+                    {
+                        ChangeAsset(definedGridLocations[i].gridLocationID[j], ObjectInfo.TYPE.NONE);
+                        definedGridLocations[i].spawned[j] = false;
 
                         return;
                     }
