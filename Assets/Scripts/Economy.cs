@@ -35,26 +35,26 @@ public class Economy : MonoBehaviour
         {
             spendTime = 0;
 
-            MinusMoney(100);
+            UpdateMoney(-100);
         }
 
-        if (!quarterDone) 
+        if (!quarterDone)
         {
             int i = (int)GetComponent<CalendarScript>().getMonth();
 
             //Yearly/Quarterly earnings added/taken to/from budget
-            if((GetComponent<CalendarScript>().getDate() == 1) && ((i - 1) % 3 == 0))
+            if ((GetComponent<CalendarScript>().getDate() == 1) && ((i - 1) % 3 == 0))
             {
                 quarterDone = true;
 
                 //Edit budget amount
                 int opCost = objectManager.GetComponent<ObjectInfoGatherer>().GetTotalOperationCost();
 
-                MinusMoney(opCost);
+                UpdateMoney(-opCost);
 
                 Debug.Log("Operational Cost for the quarter: " + opCost);
 
-                AddMoney(1000);
+                UpdateMoney(1000);
 
                 Debug.Log("Profit for the quarter: " + 1000);
 
@@ -66,20 +66,13 @@ public class Economy : MonoBehaviour
             }
         }
 
-        if (GetComponent<CalendarScript>().getDate() == 2){ quarterDone = false; }
+        if (GetComponent<CalendarScript>().getDate() == 2) { quarterDone = false; }
     }
 
     //Add money
-    public void AddMoney(int m)
+    public void UpdateMoney(int m)
     {
-        //add money value
-        money = money + m;
-    }
-
-    //takeaway money
-    public void MinusMoney(int m)
-    {
-        //add money value
-        money = money - m;
+        //Update money value with passed value +/-
+        money +=  m;
     }
 }

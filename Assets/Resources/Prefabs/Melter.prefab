@@ -659,6 +659,7 @@ GameObject:
   - component: {fileID: 5279092391231498512}
   - component: {fileID: -5653552178221418134}
   - component: {fileID: 6374065995479704662}
+  - component: {fileID: -7497307739463377945}
   m_Layer: 0
   m_Name: Melter
   m_TagString: Untagged
@@ -703,6 +704,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ad81f746308426489de636450215d68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ID: 0
   objectType: 1
   maintenanceCost: 1000
   operationalCost: 100
@@ -719,6 +721,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.9491117, y: 0.7204981, z: 2.0110874}
   m_Center: {x: -0.0092225075, y: 0.2270776, z: 0.02688694}
+--- !u!114 &-7497307739463377945
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6489153548136002407}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcd3b6358af778f4eb31e06c41384370, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8151735906297137749
 GameObject:
   m_ObjectHideFlags: 0

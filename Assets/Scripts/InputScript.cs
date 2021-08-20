@@ -7,6 +7,7 @@ using UnityEngine.EventSystems;
 public class InputScript : MonoBehaviour
 {
     public GameObject gameManager;
+    public GameObject objectManager;
 
     //Camera variables
     public float cameraSpeed;
@@ -15,7 +16,7 @@ public class InputScript : MonoBehaviour
     //Camera Movement Variables
     bool canMove = true; //TEMPORARY, WILL UPDATE DURING GAMEPLAY
 
-
+    //screen borders
     private int theScreenWidth;
     private int theScreenHeight;
 
@@ -24,7 +25,6 @@ public class InputScript : MonoBehaviour
         theScreenWidth = Screen.width;
         theScreenHeight = Screen.height;
     }
-
 
     // Update is called once per frame
     void Update()
@@ -39,11 +39,19 @@ public class InputScript : MonoBehaviour
         //escape key for pause menu
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            GetComponent<PauseScript>().PauseGame();
-            GetComponent<PauseMenuScript>().PauseMenuVisual.SetActive(true);
+            if (!GetComponent<PauseScript>().isPaused)
+            {
+                GetComponent<PauseScript>().PauseGame();
+                GetComponent<PauseMenuScript>().PauseMenuVisual.SetActive(true);
+            }
+			else
+			{
+                GetComponent<PauseScript>().UnPauseGame();
+                GetComponent<PauseMenuScript>().PauseMenuVisual.SetActive(false);
+            }
         }
 
-        //escape key for pause menu
+        //e key for marketplace toggle
         if (Input.GetKeyDown(KeyCode.E))
         {
             if(GetComponent<UIScript>().marketplaceMenu.activeSelf == false)
@@ -54,26 +62,25 @@ public class InputScript : MonoBehaviour
             {
                 GetComponent<UIScript>().marketplaceMenu.SetActive(false);
             }
-            
         }
 
         //checks if player can move camera
         if (canMove == true)
         {
             //if player is poressing W, A, S, or D then the camera moves depending on function call
-            if (Input.GetKey("s") && Camera.main.transform.position.z <= 41 && Camera.main.transform.position.x <= 58)
+            if (Input.GetKey("s"))
             {
                 MoveUp(Time.deltaTime * cameraSpeed);
             }
-            if (Input.GetKey("w") && Camera.main.transform.position.z >= -15 && Camera.main.transform.position.x >= -16)
+            if (Input.GetKey("w"))
             {
                 MoveDown(Time.deltaTime * cameraSpeed);
             }
-            if (Input.GetKey("a") && Camera.main.transform.position.z >= -15 && Camera.main.transform.position.x <= 58)
+            if (Input.GetKey("a"))
             {
                 MoveLeft(Time.deltaTime * cameraSpeed);
             }
-            if (Input.GetKey("d") && Camera.main.transform.position.z <= 41 && Camera.main.transform.position.x >= -16)
+            if (Input.GetKey("d"))
             {
                 MoveRight(Time.deltaTime * cameraSpeed);
             }
@@ -98,8 +105,8 @@ public class InputScript : MonoBehaviour
 
             ///Continously unpausing the game - will have to find a more efficient way for doing this
             ///
-            if (Input.mousePosition.x > theScreenWidth || Input.mousePosition.x < 0 || Input.mousePosition.y > theScreenHeight || Input.mousePosition.y < 0) { GetComponent<PauseScript>().PauseGame(); }
-            else { GetComponent<PauseScript>().UnPauseGame(); }
+            if (Input.mousePosition.x > theScreenWidth || Input.mousePosition.x < 0 || Input.mousePosition.y > theScreenHeight || Input.mousePosition.y < 0) { Time.timeScale = 0; }
+            else if (!GetComponent<PauseScript>().isPaused) { GetComponent<PauseScript>().UnPauseGame(); }
             ///
         }
     }
@@ -119,9 +126,15 @@ public class InputScript : MonoBehaviour
         //Checks if the ray connects with an object/asset
         if (Physics.Raycast(ray, out RaycastHit hit))
         {
-            gameManager.GetComponent<Economy>().MinusMoney(10);
+            if(hit.collider.TryGetComponent(out ClickableObject cB))
+            {
+                objectManager.GetComponent<GridScript>().SetSelectedTile(hit.collider.gameObject);
 
-            Debug.Log("Raycast complete: " + hit.collider.name);
+                gameManager.GetComponent<UIScript>().statMenu.SetActive(true);
+
+                //gathger stats of object using grid id?
+                //or hit.getcomponent?
+            }
         }
     }
 
