@@ -4,15 +4,16 @@ using UnityEngine;
 
 public class PauseScript : MonoBehaviour
 {
+	public bool isPaused;
 	public void PauseGame()
 	{
 		Time.timeScale = 0;
-		GetComponent<InputScript>().isPaused = true;
+		isPaused = true;
 	}
 
 	public void UnPauseGame()
 	{
 		Time.timeScale = 1;
-		GetComponent<InputScript>().isPaused = false;
+		isPaused = false;
 	}
 }
