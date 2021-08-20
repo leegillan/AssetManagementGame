@@ -3718,6 +3718,7 @@ GameObject:
   - component: {fileID: 1723065730}
   - component: {fileID: 1723065731}
   - component: {fileID: 1723065732}
+  - component: {fileID: 1723065733}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -3864,6 +3865,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   volumeLevelDisplay: {fileID: 985281564}
+--- !u!114 &1723065733
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1723065723}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e9a1e7ad21ce7d4b99f082f7420cf69, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1784094961 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5505740980934808595, guid: 7fee47a8034c105419b382b8969e2427,
