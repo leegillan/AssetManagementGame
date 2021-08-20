@@ -10,7 +10,6 @@ public class InputScript : MonoBehaviour
     public GameObject objectManager;
 
     //Camera variables
-    public float cameraSpeed;
     public int Boundary; // distance from edge scrolling starts
 
     //screen borders
@@ -67,37 +66,37 @@ public class InputScript : MonoBehaviour
             //if player is poressing W, A, S, or D then the camera moves depending on function call
             if (Input.GetKey("s"))
             {
-                GetComponent<CameraScript>().MoveUp(Time.deltaTime * cameraSpeed);
+                GetComponent<CameraScript>().MoveUp();
             }
             if (Input.GetKey("w"))
             {
-                GetComponent<CameraScript>().MoveDown(Time.deltaTime * cameraSpeed);
+                GetComponent<CameraScript>().MoveDown();
             }
             if (Input.GetKey("a"))
             {
-                GetComponent<CameraScript>().MoveLeft(Time.deltaTime * cameraSpeed);
+                GetComponent<CameraScript>().MoveLeft();
             }
             if (Input.GetKey("d"))
             {
-                GetComponent<CameraScript>().MoveRight(Time.deltaTime * cameraSpeed);
+                GetComponent<CameraScript>().MoveRight();
             }
 
             //If mouse is near the screen edge then move.
             if (Input.mousePosition.x > theScreenWidth - Boundary)
             {
-                GetComponent<CameraScript>().MoveRight(Time.deltaTime * cameraSpeed); // move on +X axis
+                GetComponent<CameraScript>().MoveRight(); // move on +X axis
             }
             if (Input.mousePosition.x < 0 + Boundary)
             {
-                GetComponent<CameraScript>().MoveLeft(Time.deltaTime * cameraSpeed); // move on -X axis
+                GetComponent<CameraScript>().MoveLeft(); // move on -X axis
             }
             if (Input.mousePosition.y > theScreenHeight - Boundary)
             {
-                GetComponent<CameraScript>().MoveDown(Time.deltaTime * cameraSpeed); // move on +Z axis
+                GetComponent<CameraScript>().MoveDown(); // move on +Z axis
             }
             if (Input.mousePosition.y < 0 + Boundary)
             {
-                GetComponent<CameraScript>().MoveUp(Time.deltaTime * cameraSpeed); // move on -Z axis
+                GetComponent<CameraScript>().MoveUp(); // move on -Z axis
             }
 
             ///Continously unpausing the game - will have to find a more efficient way for doing this

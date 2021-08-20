@@ -3784,7 +3784,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameManager: {fileID: 1723065723}
   objectManager: {fileID: 1842996180}
-  cameraSpeed: 15
   Boundary: 150
 --- !u!114 &1723065728
 MonoBehaviour:
@@ -3877,6 +3876,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e9a1e7ad21ce7d4b99f082f7420cf69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cameraSpeed: 0.1
+  transitionDuration: 2.5
 --- !u!1 &1784094961 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5505740980934808595, guid: 7fee47a8034c105419b382b8969e2427,
