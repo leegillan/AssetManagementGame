@@ -11,6 +11,7 @@ public class TextScript : MonoBehaviour
     public TextMeshProUGUI fpsText;
     public TextMeshProUGUI operationalCostText;
     public TextMeshProUGUI maintenanceCostText;
+    public TextMeshProUGUI ZoneText;
 
     public GameObject objectManager;
 
@@ -29,5 +30,10 @@ public class TextScript : MonoBehaviour
     {
         operationalCostText.text = "£ " + objectManager.GetComponent<ObjectInfoGatherer>().GetTotalOperationCost().ToString();
         maintenanceCostText.text = "£ " + objectManager.GetComponent<ObjectInfoGatherer>().GetTotalMaintenanceCost().ToString();
+    }
+
+    public void ChangeZoneText(string zone)
+    {
+        ZoneText.text = "Zone: " + zone;
     }
 }
