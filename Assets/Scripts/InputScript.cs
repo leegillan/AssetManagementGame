@@ -10,11 +10,7 @@ public class InputScript : MonoBehaviour
     public GameObject objectManager;
 
     //Camera variables
-    public float cameraSpeed;
     public int Boundary; // distance from edge scrolling starts
-
-    //Camera Movement Variables
-    bool canMove = true; //TEMPORARY, WILL UPDATE DURING GAMEPLAY
 
     //screen borders
     private int theScreenWidth;
@@ -64,43 +60,62 @@ public class InputScript : MonoBehaviour
             }
         }
 
+        ////TESTING ZONE TOGGLE
+        ///
+        //space key toggle current zone
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            if (GetComponent<ZoneDecider>().GetActiveZone() == ZoneDecider.ZONES.PRODUCTION)
+            {
+                GetComponent<ZoneDecider>().SetActiveZone(ZoneDecider.ZONES.QA);
+                GetComponent<TextScript>().ChangeZoneText("QA");
+            }
+            else
+            {
+                GetComponent<ZoneDecider>().SetActiveZone(ZoneDecider.ZONES.PRODUCTION);
+                GetComponent<TextScript>().ChangeZoneText("Production");
+
+            }
+        }
+
+        ////
         //checks if player can move camera
-        if (canMove == true)
+        if (GetComponent<CameraScript>().GetCanMove())
         {
             //if player is poressing W, A, S, or D then the camera moves depending on function call
             if (Input.GetKey("s"))
             {
-                MoveUp(Time.deltaTime * cameraSpeed);
+                GetComponent<CameraScript>().MoveUp();
             }
             if (Input.GetKey("w"))
             {
-                MoveDown(Time.deltaTime * cameraSpeed);
+                GetComponent<CameraScript>().MoveDown();
             }
             if (Input.GetKey("a"))
             {
-                MoveLeft(Time.deltaTime * cameraSpeed);
+                GetComponent<CameraScript>().MoveLeft();
             }
             if (Input.GetKey("d"))
             {
-                MoveRight(Time.deltaTime * cameraSpeed);
+                GetComponent<CameraScript>().MoveRight();
             }
 
             //If mouse is near the screen edge then move.
             if (Input.mousePosition.x > theScreenWidth - Boundary)
             {
-                MoveRight(Time.deltaTime * cameraSpeed); // move on +X axis
+                GetComponent<CameraScript>().MoveRight(); // move on +X axis
             }
             if (Input.mousePosition.x < 0 + Boundary)
             {
-                MoveLeft(Time.deltaTime * cameraSpeed); // move on -X axis
+                GetComponent<CameraScript>().MoveLeft(); // move on -X axis
             }
             if (Input.mousePosition.y > theScreenHeight - Boundary)
             {
-                MoveDown(Time.deltaTime * cameraSpeed); // move on +Z axis
+                GetComponent<CameraScript>().MoveDown(); // move on +Z axis
             }
             if (Input.mousePosition.y < 0 + Boundary)
             {
-                MoveUp(Time.deltaTime * cameraSpeed); // move on -Z axis
+                GetComponent<CameraScript>().MoveUp(); // move on -Z axis
             }
 
             ///Continously unpausing the game - will have to find a more efficient way for doing this
@@ -128,7 +143,9 @@ public class InputScript : MonoBehaviour
         {
             if(hit.collider.TryGetComponent(out ClickableObject cB))
             {
-                objectManager.GetComponent<GridScript>().SetSelectedTile(hit.collider.gameObject);
+                //objectManager.GetComponent<GridScript>().SetSelectedTile(hit.collider.gameObject);    //below line does this code
+                //this gets the current active grid script by checking the active zone.
+                gameManager.GetComponent<ZoneDecider>().GetGridForZone(gameManager.GetComponent<ZoneDecider>().GetActiveZone()).SetSelectedTile(hit.collider.gameObject);
 
                 gameManager.GetComponent<UIScript>().statMenu.SetActive(true);
 
@@ -137,31 +154,4 @@ public class InputScript : MonoBehaviour
             }
         }
     }
-
-    //Inputs for the main camera of the game
-    //movement for camera.
-
-    void MoveUp(float v)
-    {
-        Camera.main.transform.position = new Vector3(Camera.main.transform.position.x + v, Camera.main.transform.position.y, Camera.main.transform.position.z + v);
-    }
-
-    void MoveDown(float v)
-    {
-        Camera.main.transform.position = new Vector3(Camera.main.transform.position.x - v, Camera.main.transform.position.y, Camera.main.transform.position.z - v);
-    }
-
-    void MoveRight(float v)
-    {
-        Camera.main.transform.position = new Vector3(Camera.main.transform.position.x - v, Camera.main.transform.position.y, Camera.main.transform.position.z + v);
-    }
-
-    void MoveLeft(float v)
-    {
-        Camera.main.transform.position = new Vector3(Camera.main.transform.position.x + v, Camera.main.transform.position.y, Camera.main.transform.position.z - v);
-    }
-
-    //Getter/Setter for canMove
-    public void SetCanMove(bool c) { canMove = c; }
-    public bool GetCanMove() { return canMove; }
 }

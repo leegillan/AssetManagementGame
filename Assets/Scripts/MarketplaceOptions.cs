@@ -19,7 +19,8 @@ public class MarketplaceOptions : MonoBehaviour
         //checks if the player has enough funds to purchase product
         if (gameManager.GetComponent<Economy>().GetMoney() >= obData.purchaseCost)
         {
-            objectManager.GetComponent<GridScript>().UpdateAvailablePositions(type);
+            //objectManager.GetComponent<GridScript>().UpdateAvailablePositions(type);  //below line does this code
+            gameManager.GetComponent<ZoneDecider>().GetGridForZone(gameManager.GetComponent<ZoneDecider>().GetActiveZone()).UpdateAvailablePositions(type);
         }
     }
 }
