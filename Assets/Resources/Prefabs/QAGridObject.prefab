@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5311647485456043291}
   - component: {fileID: 2109565086603565231}
   m_Layer: 0
-  m_Name: GridObjectTest
+  m_Name: QAGridObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -61,7 +61,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 7975d2f372b81ad46ba20569956dd944, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -108,6 +108,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ad81f746308426489de636450215d68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  objectManager: {fileID: 0}
+  ID: 0
   objectType: 0
+  cost: 0
   maintenanceCost: 0
   operationalCost: 0
+  health: 100
