@@ -25,7 +25,7 @@ public class ZoneDecider : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        activeZone = ZONES.PRODUCTION;
+        activeZone = ZONES.PRODUCTION;  //start at production zone for order of GridScript components in objectManager
 
         // Get all the GridScript on this GameObject
         GridScript[] gridScripts = objectManager.GetComponents<GridScript>();
@@ -50,7 +50,7 @@ public class ZoneDecider : MonoBehaviour
             }
         }
 
-        activeZone = ZONES.PRODUCTION;
+        activeZone = ZONES.OVERVIEW;
     }
 
     //get a gridscript for a certain zone

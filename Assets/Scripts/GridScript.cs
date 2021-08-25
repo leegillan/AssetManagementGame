@@ -202,6 +202,12 @@ public class GridScript : MonoBehaviour
             case ObjectInfo.TYPE.PRESSER:
                 return (GameObject)Instantiate(Resources.Load("Prefabs/Presser"), transform.position, Quaternion.identity);
 
+            case ObjectInfo.TYPE.QADESK:
+                return (GameObject)Instantiate(Resources.Load("Prefabs/QADesk"), transform.position, Quaternion.identity);
+
+            case ObjectInfo.TYPE.STORAGEBOXES:
+                return (GameObject)Instantiate(Resources.Load("Prefabs/StorageBoxes"), transform.position, Quaternion.identity);
+
             default:
                 return null;
         }

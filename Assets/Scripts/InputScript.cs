@@ -74,8 +74,13 @@ public class InputScript : MonoBehaviour
             {
                 GetComponent<ZoneDecider>().SetActiveZone(ZoneDecider.ZONES.PRODUCTION);
                 GetComponent<TextScript>().ChangeZoneText("Production");
-
             }
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            GetComponent<ZoneDecider>().SetActiveZone(ZoneDecider.ZONES.OVERVIEW);
+            GetComponent<TextScript>().ChangeZoneText("OVERVIEW");
         }
 
         ////
@@ -151,6 +156,12 @@ public class InputScript : MonoBehaviour
 
                 //gathger stats of object using grid id?
                 //or hit.getcomponent?
+            }
+
+            if (hit.collider.TryGetComponent(out OverviewObject oB))
+            {
+                gameManager.GetComponent<ZoneDecider>().SetActiveZone(oB.zone);
+                GetComponent<TextScript>().ChangeZoneText(oB.zone.ToString());
             }
         }
     }
