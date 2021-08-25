@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ClickableObject : MonoBehaviour
+public class OverviewObject : MonoBehaviour
 {
+    public ZoneDecider.ZONES zone;
 }
