@@ -15,7 +15,7 @@ public class GridScript : MonoBehaviour
     public GameObject gameManager;
 
     //Declare variables for grid dimensions and layout
-    public float xStart, yStart;
+    public float xStart, zStart;
     public int columnLength, rowLength;
     public float xSpacing, zSpacing;
 
@@ -102,7 +102,7 @@ public class GridScript : MonoBehaviour
             for (int j = 0; j < rowLength; j++)
             {
                 //Calls Create Square function to place a unique tile
-                CreateSquare(new Vector3((xSpacing * (i % columnLength)), 0.0f, (zSpacing * (j % rowLength))), id);
+                CreateSquare(new Vector3(xStart + (xSpacing * (i % columnLength)), 0.0f, zStart + (zSpacing * (j % rowLength))), id);
 
                 id++;
             }
@@ -194,13 +194,19 @@ public class GridScript : MonoBehaviour
         switch (type)
         {
             case ObjectInfo.TYPE.NONE:
-                return (GameObject)Instantiate(Resources.Load("Prefabs/GridObjectTest"), transform.position, Quaternion.identity);
+                return (GameObject)Instantiate(Resources.Load("Prefabs/ProdGridObject"), transform.position, Quaternion.identity);
 
             case ObjectInfo.TYPE.MELTER:
                 return (GameObject)Instantiate(Resources.Load("Prefabs/Melter"), transform.position, Quaternion.identity);
 
             case ObjectInfo.TYPE.PRESSER:
                 return (GameObject)Instantiate(Resources.Load("Prefabs/Presser"), transform.position, Quaternion.identity);
+
+            case ObjectInfo.TYPE.QADESK:
+                return (GameObject)Instantiate(Resources.Load("Prefabs/QADesk"), transform.position, Quaternion.identity);
+
+            case ObjectInfo.TYPE.STORAGEBOXES:
+                return (GameObject)Instantiate(Resources.Load("Prefabs/StorageBoxes"), transform.position, Quaternion.identity);
 
             default:
                 return null;

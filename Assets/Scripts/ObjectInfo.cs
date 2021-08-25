@@ -15,7 +15,9 @@ public class ObjectInfo : MonoBehaviour
     {
         NONE = 0,
         MELTER = 1,
-        PRESSER = 2
+        PRESSER = 2,
+        QADESK = 3,
+        STORAGEBOXES = 4
     };
 
     //Declare object type
