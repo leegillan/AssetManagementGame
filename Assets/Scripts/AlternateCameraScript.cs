@@ -4,70 +4,90 @@ using UnityEngine;
 
 public class AlternateCameraScript : MonoBehaviour
 {
-    public Transform[] views;
-    public float transitionSpeed;
-    Transform currentView;
+	public Transform[] views;
+	public float transitionSpeed;
+	Transform currentView;
+	Transform transitionPoint;
+	bool halfwayThere;
+	public bool isTransitioning;
+	bool cameraIsJumping;
 
-    public GameObject gameManager;
+	public GameObject gameManager;
 
-    float orthoSize = 18;
+	float orthoSize = 18;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        currentView = views[3];//set start view (default camera)
-    }
+	// Start is called before the first frame update
+	void Start()
+	{
+		currentView = views[4];//set start view (default camera)
+		halfwayThere = true;
+		isTransitioning = false;
+		cameraIsJumping = false;
+		transitionPoint = views[0];//views[0] is far from the others to avoid issues
+	}
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Alpha1) || gameManager.GetComponent<ZoneDecider>().GetActiveZone() == ZoneDecider.ZONES.PRODUCTION)
-        {
-            currentView = views[0];
+	// Update is called once per frame
+	void Update()
+	{
+		if (Mathf.Abs(transform.position.y - transitionPoint.position.y) < 1 && !halfwayThere)
+		{
+			if (currentView == views[4]) { orthoSize = 18; }//Set ortho size for overview
+			else { orthoSize = 6; }//set ortho size for others
 
-            if (Camera.main.orthographicSize != 6)
-                orthoSize = 6;
-        }
+			Camera.main.
+			transform.position = new Vector3(currentView.position.x, currentView.position.y + 40, currentView.position.z);
+			transform.rotation = new Quaternion(currentView.rotation.x, currentView.rotation.y/* + 30 ADD THIS TO HAVE A NICE SPIN UPON APPEARING ABOVE THE TARGET VIEWPOINT*/, currentView.rotation.z, currentView.rotation.w);
+			
+			StartCoroutine("CameraSnapper");//Stops the LERP for 0.1 seconds to allow the camera to snap to new location
+			
+			halfwayThere = true;
+		}
 
-        if (Input.GetKeyDown(KeyCode.Alpha2) || gameManager.GetComponent<ZoneDecider>().GetActiveZone() == ZoneDecider.ZONES.QA)
-        {
-            currentView = views[1];
+		if (Mathf.Abs(transform.position.y - currentView.position.y) < 5 && halfwayThere) { isTransitioning = false; }
 
-            if (Camera.main.orthographicSize != 6)
-                orthoSize = 6;
-        }
+		Debug.Log(currentView);
+	}
 
-        if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            currentView = views[2];
+	void LateUpdate()
+	{
+		Transform targetTransform;
 
-            if(Camera.main.orthographicSize != 6)
-                orthoSize = 6;
-        }
+		if (!halfwayThere) { targetTransform = transitionPoint; }
+		else { targetTransform = currentView; }
 
-        if (Input.GetKeyDown(KeyCode.Alpha4))
-        {
-            currentView = views[3];
+		transform.position = Vector3.Lerp(transform.position, targetTransform.position, Time.deltaTime * transitionSpeed);//set position
 
-            //OVERVIEW CAMERA SIZE 18....
-            if (Camera.main.orthographicSize != 18)
-                orthoSize = 18;
-        }
+		Vector3 currentAngle = new Vector3(
+			Mathf.LerpAngle(transform.rotation.eulerAngles.x, targetTransform.transform.rotation.eulerAngles.x, Time.deltaTime * transitionSpeed),
+			Mathf.LerpAngle(transform.rotation.eulerAngles.y, targetTransform.transform.rotation.eulerAngles.y, Time.deltaTime * transitionSpeed),
+			Mathf.LerpAngle(transform.rotation.eulerAngles.z, targetTransform.transform.rotation.eulerAngles.z, Time.deltaTime * transitionSpeed));//calculate rotation
 
-    }
+		transform.eulerAngles = currentAngle;//set rotation
 
-    void LateUpdate()
-    {
-        transform.position = Vector3.Lerp(transform.position, currentView.position, Time.deltaTime * transitionSpeed);//set position
-       // transform.position = Vector3.Lerp(transform.position, currentView.position, 0.5f * transitionSpeed);//set position
+		Camera.main.orthographicSize = Mathf.Lerp(Camera.main.orthographicSize, orthoSize, Time.deltaTime * transitionSpeed);//smoothly change the camera's ortho size
+	}
 
-        Vector3 currentAngle = new Vector3(
-            Mathf.LerpAngle(transform.rotation.eulerAngles.x, currentView.transform.rotation.eulerAngles.x, Time.deltaTime * transitionSpeed),
-            Mathf.LerpAngle(transform.rotation.eulerAngles.y, currentView.transform.rotation.eulerAngles.y, Time.deltaTime * transitionSpeed),
-            Mathf.LerpAngle(transform.rotation.eulerAngles.z, currentView.transform.rotation.eulerAngles.z, Time.deltaTime * transitionSpeed));//calculate rotation
+	public void SetView(int viewNum)
+	{
+		if (!cameraIsJumping) //Allows LERP to be stopped
+		{
+			if ((viewNum < views.Length) && views[viewNum] != currentView)//only work if the view is valid
+			{
+				isTransitioning = true;
 
-        transform.eulerAngles = currentAngle;//set rotation
+				transitionPoint.position = new Vector3(currentView.position.x, currentView.position.y + 40, currentView.position.z);
+				halfwayThere = false;
 
-        Camera.main.orthographicSize = Mathf.Lerp(Camera.main.orthographicSize, orthoSize, Time.deltaTime * transitionSpeed);
-    }
+				currentView = views[viewNum];
+			}
+			else { Debug.Log("Failed"); }
+		}
+	}
+
+	IEnumerator CameraSnapper()//disables LERP for 0.1 seconds
+	{
+		cameraIsJumping = true;
+		yield return new WaitForSeconds(.1f);
+		cameraIsJumping = false;
+	}
 }
