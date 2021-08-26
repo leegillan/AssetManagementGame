@@ -32,6 +32,12 @@ public class InputScript : MonoBehaviour
             Select(Input.mousePosition);
         }
 
+        if (Input.GetKeyDown(KeyCode.Alpha1) || gameManager.GetComponent<ZoneDecider>().GetActiveZone() == ZoneDecider.ZONES.PRODUCTION) { Camera.main.GetComponent<AlternateCameraScript>().SetView(0); }
+        if (Input.GetKeyDown(KeyCode.Alpha2) || gameManager.GetComponent<ZoneDecider>().GetActiveZone() == ZoneDecider.ZONES.QA) { Camera.main.GetComponent<AlternateCameraScript>().SetView(1); }
+        if (Input.GetKeyDown(KeyCode.Alpha3)) { Camera.main.GetComponent<AlternateCameraScript>().SetView(2); }
+        if (Input.GetKeyDown(KeyCode.Alpha4)) { Camera.main.GetComponent<AlternateCameraScript>().SetView(3); }
+        if (Input.GetKeyDown(KeyCode.Alpha5)) { Camera.main.GetComponent<AlternateCameraScript>().SetView(4); }
+
         //escape key for pause menu
         if (Input.GetKeyDown(KeyCode.Escape))
         {
