@@ -19,11 +19,11 @@ public class AlternateCameraScript : MonoBehaviour
 	// Start is called before the first frame update
 	void Start()
 	{
-		currentView = views[3];//set start view (default camera)
+		currentView = views[4];//set start view (default camera)
 		halfwayThere = true;
 		isTransitioning = false;
 		cameraIsJumping = false;
-		transitionPoint = views[3];
+		transitionPoint = views[0];//views[0] is far from the others to avoid issues
 	}
 
 	// Update is called once per frame
@@ -31,13 +31,15 @@ public class AlternateCameraScript : MonoBehaviour
 	{
 		if (Mathf.Abs(transform.position.y - transitionPoint.position.y) < 1 && !halfwayThere)
 		{
-			if (currentView == views[3]) { orthoSize = 18; }
-			else { orthoSize = 6; }
+			if (currentView == views[4]) { orthoSize = 18; }//Set ortho size for overview
+			else { orthoSize = 6; }//set ortho size for others
 
 			Camera.main.
 			transform.position = new Vector3(currentView.position.x, currentView.position.y + 40, currentView.position.z);
 			transform.rotation = new Quaternion(currentView.rotation.x, currentView.rotation.y/* + 30 ADD THIS TO HAVE A NICE SPIN UPON APPEARING ABOVE THE TARGET VIEWPOINT*/, currentView.rotation.z, currentView.rotation.w);
-			StartCoroutine("CameraSnapper");
+			
+			StartCoroutine("CameraSnapper");//Stops the LERP for 0.1 seconds to allow the camera to snap to new location
+			
 			halfwayThere = true;
 		}
 
@@ -67,7 +69,8 @@ public class AlternateCameraScript : MonoBehaviour
 
 	public void SetView(int viewNum)
 	{
-		if (!cameraIsJumping) {
+		if (!cameraIsJumping) //Allows LERP to be stopped
+		{
 			if ((viewNum < views.Length) && views[viewNum] != currentView)//only work if the view is valid
 			{
 				isTransitioning = true;
@@ -81,7 +84,7 @@ public class AlternateCameraScript : MonoBehaviour
 		}
 	}
 
-	IEnumerator CameraSnapper()
+	IEnumerator CameraSnapper()//disables LERP for 0.1 seconds
 	{
 		cameraIsJumping = true;
 		yield return new WaitForSeconds(.1f);
