@@ -37,6 +37,18 @@ public class ObjectData : MonoBehaviour
                 data.level3Cost = 3000;
                 break;
 
+            case ObjectInfo.TYPE.QADESK:
+                data.purchaseCost = 800;
+                data.level2Cost = 1600;
+                data.level3Cost = 3200;
+                break; 
+            
+            case ObjectInfo.TYPE.STORAGEBOXES:
+                data.purchaseCost = 1500;
+                data.level2Cost = 3000;
+                data.level3Cost = 6000;
+                break;
+
             default:
                 break;
         }
