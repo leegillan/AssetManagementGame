@@ -43,7 +43,7 @@ public class AlternateCameraScript : MonoBehaviour
 			halfwayThere = true;
 		}
 
-		if (Mathf.Abs(transform.position.y - currentView.position.y) < 5 && halfwayThere) { isTransitioning = false; }
+		if (Mathf.Abs(transform.position.y - currentView.position.y) < 5 && halfwayThere) { isTransitioning = false; } 
 
 		Debug.Log(currentView);
 	}
