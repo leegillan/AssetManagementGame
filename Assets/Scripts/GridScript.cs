@@ -13,6 +13,7 @@ public class DefinedGridLocations
 public class GridScript : MonoBehaviour
 {
     public GameObject gameManager;
+    public ZoneDecider.ZONES zoneType;
 
     //Declare variables for grid dimensions and layout
     public float xStart, zStart;
@@ -112,21 +113,36 @@ public class GridScript : MonoBehaviour
     //creates individual tiles, setting ID and types
     void CreateSquare(Vector3 pos, int ID)
     {
-        if(ID == 2)
+        if (zoneType == ZoneDecider.ZONES.PRODUCTION)
         {
-            gridSquares.Add((GameObject)Instantiate(Resources.Load("Prefabs/Melter"), pos, Quaternion.identity));
+            if (ID == 2)
+            {
+                gridSquares.Add((GameObject)Instantiate(Resources.Load("Prefabs/Melter"), pos, Quaternion.identity));
+            }
+            else if (ID == 20 || ID == 30)
+            {
+                gridSquares.Add((GameObject)Instantiate(Resources.Load("Prefabs/Presser"), pos, Quaternion.identity));
+            }
+            else
+            {
+                gridSquares.Add((GameObject)Instantiate(gridSquare, pos, Quaternion.identity));
+            }
         }
-        else if(ID == 20)
+
+        if (zoneType == ZoneDecider.ZONES.QA)
         {
-            gridSquares.Add((GameObject)Instantiate(Resources.Load("Prefabs/Presser"), pos, Quaternion.identity));
-        }
-        else if (ID == 30)
-        {
-            gridSquares.Add((GameObject)Instantiate(Resources.Load("Prefabs/Presser"), pos, Quaternion.identity));
-        }
-        else
-        {
-            gridSquares.Add((GameObject)Instantiate(gridSquare, pos, Quaternion.identity));
+            if (ID == 0 || ID == 1 || ID == 2)
+            {
+                gridSquares.Add((GameObject)Instantiate(Resources.Load("Prefabs/StorageBoxes"), pos, Quaternion.identity));
+            }
+            else if (ID == 5 || ID == 6 || ID == 7 || ID == 10 || ID == 11 || ID == 12)
+            {
+                gridSquares.Add((GameObject)Instantiate(Resources.Load("Prefabs/QADesk"), pos, Quaternion.identity));
+            }
+            else
+            {
+                gridSquares.Add((GameObject)Instantiate(gridSquare, pos, Quaternion.identity));
+            }
         }
 
         gridSquares[ID].GetComponent<ObjectInfo>().SetObjectID(ID);

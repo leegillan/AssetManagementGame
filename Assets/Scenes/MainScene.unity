@@ -3616,6 +3616,16 @@ PrefabInstance:
       propertyPath: objectManager
       value: 
       objectReference: {fileID: 1842996180}
+    - target: {fileID: 2844902798788611927, guid: 6a4f8355c225a7f439f6e531e764fd4d,
+        type: 3}
+      propertyPath: gameManager
+      value: 
+      objectReference: {fileID: 1723065723}
+    - target: {fileID: 2844902798788611927, guid: 6a4f8355c225a7f439f6e531e764fd4d,
+        type: 3}
+      propertyPath: objectManager
+      value: 
+      objectReference: {fileID: 1842996180}
     - target: {fileID: 4761775562589371249, guid: 6a4f8355c225a7f439f6e531e764fd4d,
         type: 3}
       propertyPath: gameManager
@@ -3957,6 +3967,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Sell
+      objectReference: {fileID: 0}
+    - target: {fileID: 954059032131643930, guid: c3d1d0838c2602f4cb770242a0955143,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1842996181}
+    - target: {fileID: 954059032131643930, guid: c3d1d0838c2602f4cb770242a0955143,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SellSelectedTile
+      objectReference: {fileID: 0}
+    - target: {fileID: 954059032131643930, guid: c3d1d0838c2602f4cb770242a0955143,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: GridScript, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 1773220300399463462, guid: c3d1d0838c2602f4cb770242a0955143,
         type: 3}
@@ -5230,6 +5255,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameManager: {fileID: 1723065723}
+  zoneType: 1
   xStart: 0
   zStart: 0
   columnLength: 10
@@ -5306,21 +5332,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameManager: {fileID: 1723065723}
+  zoneType: 2
   xStart: 0
   zStart: 80
-  columnLength: 10
-  rowLength: 10
+  columnLength: 5
+  rowLength: 5
   xSpacing: 2.3
   zSpacing: 2.3
   gridSquare: {fileID: 8270362907156975660, guid: db3e909dac8da0648b14ca418132a4e0,
     type: 3}
   definedGridLocations:
-  - type: 1
-    gridLocationID: 0200000003000000040000000500000006000000
-    spawned: 0100000000
-  - type: 2
-    gridLocationID: 140000001e00000028000000320000003c000000
-    spawned: 0101000000
+  - type: 4
+    gridLocationID: 0000000001000000020000000300000004000000
+    spawned: 0101010000
+  - type: 3
+    gridLocationID: 0500000006000000070000000a0000000b0000000c000000080000000d000000
+    spawned: 0101010101010000
   selectedTile: {fileID: 0}
 --- !u!1001 &1890474795
 PrefabInstance:

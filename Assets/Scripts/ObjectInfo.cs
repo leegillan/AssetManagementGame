@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class ObjectInfo : MonoBehaviour
 {
-    //object manager
-    public GameObject objectManager;
-
     //Grid ID of object
     public int ID;
 
