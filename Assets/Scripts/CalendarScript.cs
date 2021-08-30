@@ -24,21 +24,39 @@ public class CalendarScript : MonoBehaviour
     };
 
     [SerializeField]
-    DAY Day;
+    DAY day;
     [SerializeField]
-    MONTH Month = MONTH.JAN;
+    MONTH month = MONTH.JAN;
     [SerializeField]
-    int MonthDate = 1;
+    int monthDate = 1;
     [SerializeField]
-    int YearDate = 2020;
+    int yearDate = 2020;
 
     int hour, minute;
 
     [SerializeField]
     float halfHourTime = 1;
     float timePassed = 0;
-    public int getDate() { return MonthDate; }
-    public MONTH getMonth() { return Month; }
+
+    //Setters
+    public void setHalfHourTime(float newHRTime) { halfHourTime = newHRTime; }//don't make this lower than 0.01 or the engine can't keep up
+    public void setCalendar(int newMinute, int newHour, int newMonthDate, MONTH newMonth, int newYear, DAY newWeekDay) 
+    {
+        minute = newMinute;
+        hour = newHour;
+        monthDate = newMonthDate;
+        month = newMonth;
+        yearDate = newYear;
+        day = newWeekDay;
+    }
+
+    //Getters
+    public int getMinute() { return minute; }
+    public int getHour() { return hour; }
+    public int getDate() { return monthDate; }
+    public MONTH getMonth() { return month; }
+    public int getYear() { return yearDate; }
+    public DAY getWeekDay() { return day; }
 
     void Start()
     {
@@ -47,8 +65,8 @@ public class CalendarScript : MonoBehaviour
 
         UpdateClockOutput();
         UpdateDayOutput();
-        monthGUI.text = Month.ToString();
-        yearGUI.text = YearDate.ToString();
+        monthGUI.text = month.ToString();
+        yearGUI.text = yearDate.ToString();
     }
 
     // Update is called once per frame
@@ -82,33 +100,33 @@ public class CalendarScript : MonoBehaviour
 
     void NextDay()
 	{
-        if(Day == DAY.SUN) { Day = DAY.MON; }
-		else { Day++; }
+        if(day == DAY.SUN) { day = DAY.MON; }
+		else { day++; }
         
-        MonthDate++;
+        monthDate++;
 
-        if (MonthDate > 28 && Month == MONTH.FEB)//Leap year should be accounted for
+        if (monthDate > 28 && month == MONTH.FEB)//Leap year should be accounted for
 		{
-            if((YearDate % 4) != 0) 
+            if((yearDate % 4) != 0) 
             {
-                MonthDate = 1;
+                monthDate = 1;
                 NextMonth();
             }
             
-            if (MonthDate > 29)
+            if (monthDate > 29)
 			{
-                MonthDate = 1;
+                monthDate = 1;
                 NextMonth();
             }
 		}
-        else if (MonthDate > 30 && (Month == MONTH.APR || Month == MONTH.JUN || Month == MONTH.SEP || Month == MONTH.NOV))//30 days hath september, April, June and November
+        else if (monthDate > 30 && (month == MONTH.APR || month == MONTH.JUN || month == MONTH.SEP || month == MONTH.NOV))//30 days hath september, April, June and November
 		{
-            MonthDate = 1;
+            monthDate = 1;
             NextMonth();
 		}
-        else if (MonthDate > 31 && (Month == MONTH.JAN || Month == MONTH.MAR || Month == MONTH.MAY || Month == MONTH.JUL || Month == MONTH.AUG || Month == MONTH.OCT || Month == MONTH.NOV || Month == MONTH.DEC))//All the rest have 31, save February alone
+        else if (monthDate > 31 && (month == MONTH.JAN || month == MONTH.MAR || month == MONTH.MAY || month == MONTH.JUL || month == MONTH.AUG || month == MONTH.OCT || month == MONTH.NOV || month == MONTH.DEC))//All the rest have 31, save February alone
 		{
-            MonthDate = 1;
+            monthDate = 1;
             NextMonth();
         }
 
@@ -117,21 +135,21 @@ public class CalendarScript : MonoBehaviour
 
     void NextMonth()
 	{
-        if(Month == MONTH.DEC)
+        if(month == MONTH.DEC)
 		{
-            Month = MONTH.JAN;
+            month = MONTH.JAN;
             NextYear();
 		}
-		else { Month++; }
+		else { month++; }
 
-        monthGUI.text = Month.ToString();
+        monthGUI.text = month.ToString();
 	}
 
     void NextYear()
 	{
-        YearDate++;
+        yearDate++;
 
-        yearGUI.text = YearDate.ToString();
+        yearGUI.text = yearDate.ToString();
 	}
 
     void UpdateClockOutput()
@@ -155,8 +173,8 @@ public class CalendarScript : MonoBehaviour
 	{
         string monthTidy = "";
 
-        if (MonthDate < 10) { monthTidy = "0" + MonthDate.ToString(); }
-        else { monthTidy = MonthDate.ToString(); }
+        if (monthDate < 10) { monthTidy = "0" + monthDate.ToString(); }
+        else { monthTidy = monthDate.ToString(); }
 
         dayGUI.text = monthTidy;
     }
