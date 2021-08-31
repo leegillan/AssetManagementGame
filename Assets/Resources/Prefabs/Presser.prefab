@@ -379,9 +379,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ID: 0
   objectType: 2
-  cost: 0
+  isMachine: 1
+  machineHealth: 100
+  depreciationSpeed: 10
+  productionOutput: 0
+  productionSpeed: 0
   maintenanceCost: 500
   operationalCost: 10
+  constructionTime: 5
 --- !u!65 &7570465969014117935
 BoxCollider:
   m_ObjectHideFlags: 0
