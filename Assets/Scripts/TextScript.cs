@@ -11,7 +11,9 @@ public class TextScript : MonoBehaviour
     public TextMeshProUGUI fpsText;
     public TextMeshProUGUI operationalCostText;
     public TextMeshProUGUI maintenanceCostText;
-    public TextMeshProUGUI ZoneText;
+    public TextMeshProUGUI zoneText;
+
+    public TextMeshProUGUI machineLifeText;
 
     public GameObject objectManager;
 
@@ -26,6 +28,11 @@ public class TextScript : MonoBehaviour
         fpsText.text = ("FPS: " + FPS.ToString());
     }
 
+    public void UpdateStatMenu()
+    {
+        machineLifeText.text = GetComponent<ZoneDecider>().GetGridForZone(GetComponent<ZoneDecider>().GetActiveZone()).GetSelectedTile().GetComponent<ObjectInfo>().GetMachineHealth().ToString() + " %";
+    }
+
     public void UpdateQuarterlyText()
     {
         operationalCostText.text = "£ " + objectManager.GetComponent<ObjectInfoGatherer>().GetTotalOperationCost().ToString();
@@ -34,6 +41,6 @@ public class TextScript : MonoBehaviour
 
     public void ChangeZoneText(string zone)
     {
-        ZoneText.text = "Zone: " + zone;
+        zoneText.text = "Zone: " + zone;
     }
 }

@@ -78,21 +78,7 @@ public class InputScript : MonoBehaviour
         }
 
         ////TESTING ZONE TOGGLE
-        ///
-        //space key toggle current zone
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            if (GetComponent<ZoneDecider>().GetActiveZone() == ZoneDecider.ZONES.PRODUCTION)
-            {
-                GetComponent<ZoneDecider>().SetActiveZone(ZoneDecider.ZONES.QA);
-                GetComponent<TextScript>().ChangeZoneText("QA");
-            }
-            else
-            {
-                GetComponent<ZoneDecider>().SetActiveZone(ZoneDecider.ZONES.PRODUCTION);
-                GetComponent<TextScript>().ChangeZoneText("Production");
-            }
-        }
+        //
 
         if (Input.GetKeyDown(KeyCode.Alpha4))
         {
@@ -168,6 +154,10 @@ public class InputScript : MonoBehaviour
                 //objectManager.GetComponent<GridScript>().SetSelectedTile(hit.collider.gameObject);    //below line does this code
                 //this gets the current active grid script by checking the active zone.
                 gameManager.GetComponent<ZoneDecider>().GetGridForZone(gameManager.GetComponent<ZoneDecider>().GetActiveZone()).SetSelectedTile(hit.collider.gameObject);
+
+                ///put in a bool to determine that an object has been selected and then update the health whilst the screen is up, then when the player exits the screen set the bool to be false
+                //
+                GetComponent<TextScript>().UpdateStatMenu();
 
                 gameManager.GetComponent<UIScript>().statMenu.SetActive(true);
 

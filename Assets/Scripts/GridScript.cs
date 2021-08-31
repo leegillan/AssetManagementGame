@@ -40,7 +40,7 @@ public class GridScript : MonoBehaviour
     public List<DefinedGridLocations> GetDefinedGridLocations() { return definedGridLocations; }
 
     //the tile that the player has most recently clicked on
-    [SerializeField ]private GameObject selectedTile;
+    [SerializeField]private GameObject selectedTile;
 
     //Selected Tile getter
     public GameObject GetSelectedTile() { return selectedTile; }
@@ -60,6 +60,17 @@ public class GridScript : MonoBehaviour
             //gets rid of old asset
             UpdateAvailablePositions(selectedTile.GetComponent<ObjectInfo>().GetObjectType(), selectedTile.GetComponent<ObjectInfo>().GetObjectID());
         }
+    }
+
+    public void SellTile(GameObject Tile)
+    {
+        //minus the cost from the total costs that get shown in the quarterly menu
+        GetComponent<ObjectInfoGatherer>().UpdateTotalOperationalCost(-Tile.GetComponent<ObjectInfo>().GetOperationalCost());
+        GetComponent<ObjectInfoGatherer>().UpdateTotalMaintenanceCost(-Tile.GetComponent<ObjectInfo>().GetMaintenanceCost());
+        //need to update list of objects aswell
+
+        //gets rid of old asset
+        UpdateAvailablePositions(Tile.GetComponent<ObjectInfo>().GetObjectType(), Tile.GetComponent<ObjectInfo>().GetObjectID());
     }
 
     private void Start()
@@ -246,7 +257,7 @@ public class GridScript : MonoBehaviour
                         gameManager.GetComponent<Economy>().UpdateMoney(-obData.purchaseCost);
 
                         //changes old to new assets
-                        ChangeAsset(definedGridLocations[i].gridLocationID[j], type);
+                        StartCoroutine(WaitForConstructionTime(i, j, type, obData));
 
                         //sets boolean to true for further checks
                         definedGridLocations[i].spawned[j] = true;
@@ -285,5 +296,14 @@ public class GridScript : MonoBehaviour
                 }
             }
         }
+    }
+
+    IEnumerator WaitForConstructionTime(int i, int j, ObjectInfo.TYPE type, Data obData)
+    {
+        //Wait for construction time in seconds
+        yield return new WaitForSeconds(obData.constructionTime);
+
+        //changes old to new assets
+        ChangeAsset(definedGridLocations[i].gridLocationID[j], type);
     }
 }
