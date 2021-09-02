@@ -61,6 +61,7 @@ public class Economy : MonoBehaviour
                 //pauses any time.deltaTime related issues in game
                 quarterlyMenu.SetActive(true);
                 GetComponent<TextScript>().UpdateQuarterlyText();
+                GetComponent<SecondhandMarketScript>().RefreshSecondhandShop();
 
                 GetComponent<PauseScript>().PauseGame();
             }

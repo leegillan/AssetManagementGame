@@ -1,0 +1,24 @@
+fileFormatVersion: 2
+guid: 1b1d62c204ee3ed4aa2e9c9a6b3f5853
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - machinePage: {instanceID: 0}
+  - secondhandPage: {instanceID: 0}
+  - objectManager: {instanceID: 0}
+  - secondHandPressy: {instanceID: 0}
+  - secondHandQADesky: {instanceID: 0}
+  - secondHandMelty: {instanceID: 0}
+  - secondhandToggleButton: {instanceID: 0}
+  - tab1Cost: {instanceID: 0}
+  - tab1Condition: {instanceID: 0}
+  - tab2Cost: {instanceID: 0}
+  - tab2Condition: {instanceID: 0}
+  - tab3Cost: {instanceID: 0}
+  - tab3Condition: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
