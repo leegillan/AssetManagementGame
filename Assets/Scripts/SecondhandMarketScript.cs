@@ -8,13 +8,15 @@ public class SecondhandMarketScript : MonoBehaviour
 {
     bool secondhandSaleActive = false;
     //Type variable and getter
-    public GameObject machinePage, secondhandPage, objectManager, secondHandPressy, secondHandQADesky, secondHandMelty;
+    public GameObject machinePage, secondhandPage, objectManager, gameManager,secondHandPressy, secondHandQADesky, secondHandMelty;
 
     public TextMeshProUGUI secondhandToggleButton, tab1Cost, tab1Condition, tab2Cost, tab2Condition, tab3Cost, tab3Condition;//tab1 - Pressers, tab2 - QA desks, tab3 - Melters
 
     Data cost;
 
-    
+    bool[] isPresserSold = new bool[3];
+    bool[] isQASold = new bool[3];
+    bool[] isMelterSold = new bool[3];
 
     GameObject[] secondHandPressers = new GameObject[3];
     GameObject[] secondHandQADesks = new GameObject[3];
@@ -34,6 +36,9 @@ public class SecondhandMarketScript : MonoBehaviour
             secondHandPressers[i] = Instantiate(secondHandPressy);
             secondHandQADesks[i] = Instantiate(secondHandQADesky);
             secondHandMelters[i] = Instantiate(secondHandMelty);
+            //isPresserSold[i] = false;
+            //isQASold[i] = false;
+            //isMelterSold[i] = false;
         }
 
         RefreshSecondhandShop();
@@ -59,7 +64,7 @@ public class SecondhandMarketScript : MonoBehaviour
 
     public void SetToFalse() { secondhandSaleActive = false; } //ensures that new machines are prioritised
 
-    public void cycleTab1()
+    public void cycleTab1()//Switch between the available options
 	{
         if (pressNum < 2) { pressNum++; }
         else { pressNum = 0; }
@@ -84,24 +89,21 @@ public class SecondhandMarketScript : MonoBehaviour
         {
             //Pressers
             secondHandPressers[i].GetComponent<ObjectInfo>().SetMachineHealth(Random.Range(50, 90));
-
-            Debug.Log(secondHandPressers[i].GetComponent<ObjectInfo>().GetMachineHealth());
+            isPresserSold[i] = false;
         }
-
-        Debug.Log(secondHandPressers[0].GetComponent<ObjectInfo>().GetMachineHealth());
-        Debug.Log(secondHandPressers[1].GetComponent<ObjectInfo>().GetMachineHealth());
-        Debug.Log(secondHandPressers[2].GetComponent<ObjectInfo>().GetMachineHealth());
 
         for (int i = 0; i < secondHandQADesks.Length; i++)
         {
             //QA Desks
             secondHandQADesks[i].GetComponent<ObjectInfo>().SetMachineHealth(90);
+            isQASold[i] = false;
         }
 
         for (int i = 0; i < secondHandMelters.Length; i++)
         {
             //Melters
             secondHandMelters[i].GetComponent<ObjectInfo>().SetMachineHealth(Random.Range(50, 90));
+            isMelterSold[i] = false;
         }
     
        UpdateOutputs();//Call last for guaranteed newest info
@@ -113,19 +115,98 @@ public class SecondhandMarketScript : MonoBehaviour
         cost = objectManager.GetComponent<ObjectData>().GetObjectData(ObjectInfo.TYPE.PRESSER);//Get the base cost
 
         //Pressers
-        tab1Cost.SetText("Cost: £" + (cost.purchaseCost * secondHandPressers[pressNum].GetComponent<ObjectInfo>().GetMachineHealth()) / 100);//Set appropriate discounted cost
-        tab1Condition.SetText("Status: " + secondHandPressers[pressNum].GetComponent<ObjectInfo>().GetMachineHealth().ToString() + "%");//Output the health percentage
+        if (!isPresserSold[pressNum])
+        {
+            tab1Cost.SetText("Cost: £" + (cost.purchaseCost * secondHandPressers[pressNum].GetComponent<ObjectInfo>().GetMachineHealth()) / 100);//Set appropriate discounted cost
+            tab1Condition.SetText("Status: " + secondHandPressers[pressNum].GetComponent<ObjectInfo>().GetMachineHealth().ToString() + "%");//Output the health percentage
+        }
+		else
+		{
+            tab1Cost.SetText("Cost: SOLD");
+            tab1Condition.SetText("Status: SOLD");
+        }
 
         cost = objectManager.GetComponent<ObjectData>().GetObjectData(ObjectInfo.TYPE.QADESK);
 
         //QA Desks
-        tab2Cost.SetText("Cost: £" + (cost.purchaseCost * secondHandQADesks[qaNum].GetComponent<ObjectInfo>().GetMachineHealth()) / 100);
-        tab2Condition.SetText("Status: " + secondHandQADesks[qaNum].GetComponent<ObjectInfo>().GetMachineHealth().ToString() + "%");
+        if (!isQASold[qaNum])
+        {
+            tab2Cost.SetText("Cost: £" + (cost.purchaseCost * secondHandQADesks[qaNum].GetComponent<ObjectInfo>().GetMachineHealth()) / 100);
+            tab2Condition.SetText("Status: " + secondHandQADesks[qaNum].GetComponent<ObjectInfo>().GetMachineHealth().ToString() + "%");
+        }
+		else
+		{
+            tab2Cost.SetText("Cost: SOLD");
+            tab2Condition.SetText("Status: SOLD");
+        }
 
         cost = objectManager.GetComponent<ObjectData>().GetObjectData(ObjectInfo.TYPE.MELTER);
 
         //Melters
-        tab3Cost.SetText("Cost: £" + (cost.purchaseCost * secondHandMelters[meltNum].GetComponent<ObjectInfo>().GetMachineHealth()) / 100);
-        tab3Condition.SetText("Status: " + secondHandMelters[meltNum].GetComponent<ObjectInfo>().GetMachineHealth().ToString() + "%");
+        if (!isMelterSold[meltNum])
+        {
+            tab3Cost.SetText("Cost: £" + (cost.purchaseCost * secondHandMelters[meltNum].GetComponent<ObjectInfo>().GetMachineHealth()) / 100);
+            tab3Condition.SetText("Status: " + secondHandMelters[meltNum].GetComponent<ObjectInfo>().GetMachineHealth().ToString() + "%");
+        }
+		else
+		{
+            tab3Cost.SetText("Cost: SOLD");
+            tab3Condition.SetText("Status: SOLD");
+        }
 	}
+
+    public void BuyPresser()
+	{
+        cost = objectManager.GetComponent<ObjectData>().GetObjectData(ObjectInfo.TYPE.PRESSER);//Get the base cost
+        float floatRefund = cost.purchaseCost - (cost.purchaseCost * secondHandPressers[pressNum].GetComponent<ObjectInfo>().GetMachineHealth()) / 100;
+        int moneyToRefund = (int)floatRefund;
+
+        if ((gameManager.GetComponent<Economy>().GetMoney() >= (cost.purchaseCost * secondHandPressers[pressNum].GetComponent<ObjectInfo>().GetMachineHealth()) /100) && !isPresserSold[pressNum])
+		{
+            gameManager.GetComponent<ZoneDecider>().GetGridForZone(gameManager.GetComponent<ZoneDecider>().GetActiveZone()).UpdateAvailablePositions(ObjectInfo.TYPE.PRESSER);
+            gameManager.GetComponent<Economy>().UpdateMoney(moneyToRefund);
+            isPresserSold[pressNum] = true;
+            UpdateOutputs();
+        }
+		else
+		{
+            //Not enough Money
+		}
+    }
+    public void BuyQA()
+    {
+        cost = objectManager.GetComponent<ObjectData>().GetObjectData(ObjectInfo.TYPE.QADESK);
+        float floatRefund = cost.purchaseCost - (cost.purchaseCost * secondHandQADesks[qaNum].GetComponent<ObjectInfo>().GetMachineHealth()) / 100;
+        int moneyToRefund = (int)floatRefund;
+
+        if ((gameManager.GetComponent<Economy>().GetMoney() >= (cost.purchaseCost * secondHandQADesks[qaNum].GetComponent<ObjectInfo>().GetMachineHealth()) / 100) && !isQASold[qaNum])
+        {
+            gameManager.GetComponent<ZoneDecider>().GetGridForZone(gameManager.GetComponent<ZoneDecider>().GetActiveZone()).UpdateAvailablePositions(ObjectInfo.TYPE.QADESK);
+            gameManager.GetComponent<Economy>().UpdateMoney(moneyToRefund);
+            isQASold[qaNum] = true;
+            UpdateOutputs();
+        }
+        else
+        {
+            //Not enough Money
+        }
+    }
+    public void BuyMelter()
+    {
+        cost = objectManager.GetComponent<ObjectData>().GetObjectData(ObjectInfo.TYPE.MELTER);
+        float floatRefund = cost.purchaseCost - (cost.purchaseCost * secondHandMelters[meltNum].GetComponent<ObjectInfo>().GetMachineHealth()) / 100;
+        int moneyToRefund = (int)floatRefund;
+
+        if ((gameManager.GetComponent<Economy>().GetMoney() >= (cost.purchaseCost * secondHandMelters[meltNum].GetComponent<ObjectInfo>().GetMachineHealth()) / 100) && !isMelterSold[meltNum])
+        {
+            gameManager.GetComponent<ZoneDecider>().GetGridForZone(gameManager.GetComponent<ZoneDecider>().GetActiveZone()).UpdateAvailablePositions(ObjectInfo.TYPE.MELTER);
+            gameManager.GetComponent<Economy>().UpdateMoney(moneyToRefund);
+            isMelterSold[meltNum] = true;
+            UpdateOutputs();
+        }
+        else
+        {
+            //Not enough Money
+        }
+    }
 }

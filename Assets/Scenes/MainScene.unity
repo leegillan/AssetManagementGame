@@ -3945,6 +3945,36 @@ PrefabInstance:
       propertyPath: objectManager
       value: 
       objectReference: {fileID: 1842996180}
+    - target: {fileID: 8015360337443756280, guid: 6a4f8355c225a7f439f6e531e764fd4d,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1723065735}
+    - target: {fileID: 8015360337443756280, guid: 6a4f8355c225a7f439f6e531e764fd4d,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: BuyMelter
+      objectReference: {fileID: 0}
+    - target: {fileID: 8015360337443756280, guid: 6a4f8355c225a7f439f6e531e764fd4d,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: SecondhandMarketScript, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 8330804606077997042, guid: 6a4f8355c225a7f439f6e531e764fd4d,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1723065735}
+    - target: {fileID: 8330804606077997042, guid: 6a4f8355c225a7f439f6e531e764fd4d,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: BuyPresser
+      objectReference: {fileID: 0}
+    - target: {fileID: 8330804606077997042, guid: 6a4f8355c225a7f439f6e531e764fd4d,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: SecondhandMarketScript, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 8441751772595502719, guid: 6a4f8355c225a7f439f6e531e764fd4d,
         type: 3}
       propertyPath: m_text
@@ -4129,7 +4159,25 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 9038523531947745799, guid: 6a4f8355c225a7f439f6e531e764fd4d,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1723065735}
+    - target: {fileID: 9038523531947745799, guid: 6a4f8355c225a7f439f6e531e764fd4d,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: BuyQA
+      objectReference: {fileID: 0}
+    - target: {fileID: 9038523531947745799, guid: 6a4f8355c225a7f439f6e531e764fd4d,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: SecondhandMarketScript, Assembly-CSharp
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 2264590818635225837, guid: 6a4f8355c225a7f439f6e531e764fd4d, type: 3}
+    - {fileID: 5934003626988470370, guid: 6a4f8355c225a7f439f6e531e764fd4d, type: 3}
+    - {fileID: 8006719973865198507, guid: 6a4f8355c225a7f439f6e531e764fd4d, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 6a4f8355c225a7f439f6e531e764fd4d, type: 3}
 --- !u!1 &963194225
 GameObject:
@@ -5499,6 +5547,7 @@ MonoBehaviour:
   machinePage: {fileID: 1610658196}
   secondhandPage: {fileID: 1287327603}
   objectManager: {fileID: 1842996180}
+  gameManager: {fileID: 1723065723}
   secondHandPressy: {fileID: 3414811796486627359, guid: 9f1064ea2233b1546bdac329938c5eff,
     type: 3}
   secondHandQADesky: {fileID: 6059957792433887270, guid: fa49d206771ee8a40a073cee606f0154,
