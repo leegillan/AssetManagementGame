@@ -5,19 +5,21 @@ using UnityEngine;
 public class ZoneDecider : MonoBehaviour
 {
     public GameObject objectManager;
+    public GameObject prodAreaBlocker, QAAreaBlocker, storageAreaBlocker, officeAreaBlocker;
 
     public enum ZONES
     {
         OVERVIEW = 0,
         PRODUCTION = 1,
         QA = 2,
-        STORAGE = 3
+        STORAGE = 3,
+        OFFICES = 4
     }
 
     //sets and gets activeZone
     private ZONES activeZone;
     public ZONES GetActiveZone() { return activeZone; }
-    public void SetActiveZone(ZONES zone) { activeZone = zone; }
+    public void SetActiveZone(ZONES zone) { ChangeSelectedZone(zone); }
 
     // create a Dictionary with a key of type ZONE and a value of type gridscript
     public Dictionary<ZONES, GridScript> allGridScripts = new Dictionary<ZONES, GridScript>();
@@ -34,7 +36,7 @@ public class ZoneDecider : MonoBehaviour
         // which allows us to store each GridScript for each unique Zone
         foreach (GridScript gridScript in gridScripts)
         {
-            switch(activeZone)
+            switch (activeZone)
             {
                 case ZONES.PRODUCTION:
                     SetGridForZone(gridScript, activeZone);
@@ -43,6 +45,17 @@ public class ZoneDecider : MonoBehaviour
 
                 case ZONES.QA:
                     SetGridForZone(gridScript, activeZone);
+                    activeZone = ZONES.STORAGE;
+                    break;
+
+                case ZONES.STORAGE:
+                    SetGridForZone(gridScript, activeZone);
+                    activeZone = ZONES.OFFICES;
+                    break;
+
+                case ZONES.OFFICES:
+                    SetGridForZone(gridScript, activeZone);
+                    activeZone = ZONES.PRODUCTION;
                     break;
 
                 default:
@@ -50,7 +63,7 @@ public class ZoneDecider : MonoBehaviour
             }
         }
 
-        activeZone = ZONES.OVERVIEW;
+        activeZone = ZONES.PRODUCTION;
     }
 
     //get a gridscript for a certain zone
@@ -63,5 +76,45 @@ public class ZoneDecider : MonoBehaviour
     public void SetGridForZone(GridScript gridScript, ZONES zone)
     {
         allGridScripts.Add(zone, gridScript);
+    }
+
+    public void ChangeSelectedZone(ZONES zone)
+    {
+        switch (zone)
+        {
+            case ZONES.PRODUCTION:
+                prodAreaBlocker.SetActive(false);
+                QAAreaBlocker.SetActive(true);
+                storageAreaBlocker.SetActive(true);
+                officeAreaBlocker.SetActive(true);
+                break;
+
+            case ZONES.QA:
+                prodAreaBlocker.SetActive(true);
+                QAAreaBlocker.SetActive(false);
+                storageAreaBlocker.SetActive(true);
+                officeAreaBlocker.SetActive(true);
+                break;
+
+            case ZONES.STORAGE:
+                prodAreaBlocker.SetActive(true);
+                QAAreaBlocker.SetActive(true);
+                storageAreaBlocker.SetActive(false);
+                officeAreaBlocker.SetActive(true);
+                break;
+
+            case ZONES.OFFICES:
+                prodAreaBlocker.SetActive(true);
+                QAAreaBlocker.SetActive(true);
+                storageAreaBlocker.SetActive(true);
+                officeAreaBlocker.SetActive(false);
+                break;
+
+            default:
+                break;
+        }
+
+        activeZone = zone;
+
     }
 }

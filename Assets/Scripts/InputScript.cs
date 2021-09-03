@@ -39,12 +39,6 @@ public class InputScript : MonoBehaviour
                 gameManager.GetComponent<ZoneDecider>().SetActiveZone(ZoneDecider.ZONES.PRODUCTION);
                 GetComponent<TextScript>().ChangeZoneText(ZoneDecider.ZONES.PRODUCTION.ToString());
             }
-            if (Input.GetKeyDown(KeyCode.Alpha2) || gameManager.GetComponent<ZoneDecider>().GetActiveZone() == ZoneDecider.ZONES.QA) 
-            {
-                Camera.main.GetComponent<AlternateCameraScript>().SetView(2);
-                gameManager.GetComponent<ZoneDecider>().SetActiveZone(ZoneDecider.ZONES.QA);
-                GetComponent<TextScript>().ChangeZoneText(ZoneDecider.ZONES.QA.ToString());
-            }
             if (Input.GetKeyDown(KeyCode.Alpha3)) { Camera.main.GetComponent<AlternateCameraScript>().SetView(3); }
             if (Input.GetKeyDown(KeyCode.Alpha4)) { Camera.main.GetComponent<AlternateCameraScript>().SetView(4); }
             if (Input.GetKeyDown(KeyCode.Alpha5)) { Camera.main.GetComponent<AlternateCameraScript>().SetView(5); }//currently just to check for errors

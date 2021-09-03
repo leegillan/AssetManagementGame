@@ -139,8 +139,7 @@ public class GridScript : MonoBehaviour
                 gridSquares.Add((GameObject)Instantiate(gridSquare, pos, Quaternion.identity));
             }
         }
-
-        if (zoneType == ZoneDecider.ZONES.QA)
+        else if (zoneType == ZoneDecider.ZONES.QA)
         {
             if (ID == 0 || ID == 1 || ID == 2)
             {
@@ -154,6 +153,10 @@ public class GridScript : MonoBehaviour
             {
                 gridSquares.Add((GameObject)Instantiate(gridSquare, pos, Quaternion.identity));
             }
+        }
+        else
+        {
+            gridSquares.Add((GameObject)Instantiate(gridSquare, pos, Quaternion.identity));
         }
 
         gridSquares[ID].GetComponent<ObjectInfo>().SetObjectID(ID);

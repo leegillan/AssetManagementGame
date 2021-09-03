@@ -14,12 +14,12 @@ public class AlternateCameraScript : MonoBehaviour
 
 	public GameObject gameManager;
 
-	float orthoSize = 18;
+	float orthoSize = 9.5f;
 
 	// Start is called before the first frame update
 	void Start()
 	{
-		currentView = views[4];//set start view (default camera)
+		currentView = views[1];//set start view (default camera)
 		halfwayThere = true;
 		isTransitioning = false;
 		cameraIsJumping = false;
@@ -31,8 +31,8 @@ public class AlternateCameraScript : MonoBehaviour
 	{
 		if (Mathf.Abs(transform.position.y - transitionPoint.position.y) < 1 && !halfwayThere)
 		{
-			if (currentView == views[4]) { orthoSize = 18; }//Set ortho size for overview
-			else { orthoSize = 6; }//set ortho size for others
+			if (currentView == views[4]) { orthoSize = 9.5f; }//Set ortho size for overview
+			else { orthoSize = 9.5f; }//set ortho size for others
 
 			Camera.main.
 			transform.position = new Vector3(currentView.position.x, currentView.position.y + 40, currentView.position.z);
