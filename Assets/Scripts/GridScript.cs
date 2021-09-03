@@ -126,13 +126,21 @@ public class GridScript : MonoBehaviour
     {
         if (zoneType == ZoneDecider.ZONES.PRODUCTION)
         {
-            if (ID == 2)
+            if (ID == 43 || ID == 33 || ID == 23)
             {
-                gridSquares.Add((GameObject)Instantiate(Resources.Load("Prefabs/Melter"), pos, Quaternion.identity));
+                gridSquares.Add((GameObject)Instantiate(Resources.Load("Prefabs/Presser"), pos, Quaternion.identity));
             }
             else if (ID == 20 || ID == 30)
             {
-                gridSquares.Add((GameObject)Instantiate(Resources.Load("Prefabs/Presser"), pos, Quaternion.identity));
+                gridSquares.Add((GameObject)Instantiate(Resources.Load("Prefabs/Melter"), pos, Quaternion.identity));
+            }
+            else if (ID == 21 || ID == 31 || ID == 41 || ID == 51 || ID == 54 || ID == 44 || ID == 34 || ID == 24)
+            {
+                gridSquares.Add((GameObject)Instantiate(Resources.Load("Prefabs/ConveyorBelt"), pos, Quaternion.Euler(0.0f, 90.0f, 0.0f)));
+            }
+            else if (ID == 52 || ID == 53)
+            {
+                gridSquares.Add((GameObject)Instantiate(Resources.Load("Prefabs/ConveyorBelt"), pos, Quaternion.identity));
             }
             else
             {

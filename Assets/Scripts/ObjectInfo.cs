@@ -16,21 +16,26 @@ public class ObjectInfo : MonoBehaviour
         MELTER = 1,
         PRESSER = 2,
         QADESK = 3,
-        STORAGEBOXES = 4
+        STORAGEBOXES = 4,
+        CONVEYORBELT = 5
     };
 
     //Declare object type
     public TYPE objectType;
+    public int machineProcessNumber;
 
     //Objects dynamic variables that can be changed throughout gameplay
     public bool isMachine = false;              //determine if object is a machine or not
 
     public float machineHealth = 100.0f;        //modifiable value that determines the life of the machine
-    public float depreciationSpeed = 10.0f;      //speed at which the health decreases
+    public float depreciationSpeed = 10.0f;     //speed at which the health decreases
     private float depreciationCounter;
 
+    public int productionInput;                 //what the machine pulls in from the stockpiles before them
+
     public int productionOutput;                //output from machine which is modified by speed of machine. (e.g 5,000 /day?)
-    public float productionSpeed;               //speed of the output - affects the health depreciation speed
+    public float productionSpeed;               //speed of the output - affects the health depreciation speed and the amount that is outputted
+    private int newProductionSpeed;             //will be used to update the production speed and the production total values
 
     public int maintenanceCost;                 //the cost to increase the machines health either back to 100%? or per 10%?
     public int operationalCost;                 //the cost to run the machine (e.g 500 /day?)
@@ -62,6 +67,21 @@ public class ObjectInfo : MonoBehaviour
     private void Start()
     {
         gameManager = GameObject.Find("GameManager");
+
+        if (isMachine)
+        {
+            gameManager.GetComponent<ProductionProcess>().UpdateTotalMachineInput(machineProcessNumber, productionInput);
+            gameManager.GetComponent<ProductionProcess>().UpdateTotalMachineOutput(machineProcessNumber, productionOutput);
+        }
+    }
+
+    private void OnDestroy()
+    {
+        if (isMachine && gameManager)
+        {
+            gameManager.GetComponent<ProductionProcess>().UpdateTotalMachineInput(machineProcessNumber, -productionInput);
+            gameManager.GetComponent<ProductionProcess>().UpdateTotalMachineOutput(machineProcessNumber, -productionOutput);
+        }
     }
 
     private void Update()
@@ -76,11 +96,19 @@ public class ObjectInfo : MonoBehaviour
 
                 depreciationCounter = 0;
             }
-        }
 
-        if(machineHealth <= 0)
-        {
-            gameManager.GetComponent<ZoneDecider>().GetGridForZone(gameManager.GetComponent<ZoneDecider>().GetActiveZone()).SellTile(gameObject);
+            //add toggle that turns machine off/on
+            //will have to update production input/output
+
+            if (machineHealth <= 0)
+            {
+                gameManager.GetComponent<ZoneDecider>().GetGridForZone(gameManager.GetComponent<ZoneDecider>().GetActiveZone()).SellTile(gameObject);
+            }
+
+            //if(newProductionSpeed != productionSpeed)
+            //{
+
+            //}
         }
     }
 }

@@ -1640,6 +1640,7 @@ PrefabInstance:
     - {fileID: 5064143518767865244, guid: 48ca1eac7a7667a458a465b9a64a0e59, type: 3}
     - {fileID: 4391608886019922492, guid: 48ca1eac7a7667a458a465b9a64a0e59, type: 3}
     - {fileID: 1940834446843459305, guid: 48ca1eac7a7667a458a465b9a64a0e59, type: 3}
+    - {fileID: -1808966467328627396, guid: 48ca1eac7a7667a458a465b9a64a0e59, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 48ca1eac7a7667a458a465b9a64a0e59, type: 3}
 --- !u!114 &432760034 stripped
 MonoBehaviour:
@@ -3498,7 +3499,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8422974154197424646, guid: 86adad9e01c690c4d88213f4e068f497, type: 3}
+    - {fileID: 334436906024315360, guid: 86adad9e01c690c4d88213f4e068f497, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 86adad9e01c690c4d88213f4e068f497, type: 3}
 --- !u!114 &843116134 stripped
 MonoBehaviour:
@@ -3633,6 +3636,7 @@ PrefabInstance:
     - {fileID: 5064143518767865244, guid: 48ca1eac7a7667a458a465b9a64a0e59, type: 3}
     - {fileID: 4391608886019922492, guid: 48ca1eac7a7667a458a465b9a64a0e59, type: 3}
     - {fileID: 1940834446843459305, guid: 48ca1eac7a7667a458a465b9a64a0e59, type: 3}
+    - {fileID: -1808966467328627396, guid: 48ca1eac7a7667a458a465b9a64a0e59, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 48ca1eac7a7667a458a465b9a64a0e59, type: 3}
 --- !u!1 &910892080
 GameObject:
@@ -5427,7 +5431,8 @@ PrefabInstance:
       propertyPath: m_CastShadows
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: -5652501879743191002, guid: 8d91e7910329f8a489afc25defdc3293, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 8d91e7910329f8a489afc25defdc3293, type: 3}
 --- !u!1 &1672613121
 GameObject:
@@ -5686,6 +5691,7 @@ GameObject:
   - component: {fileID: 1723065733}
   - component: {fileID: 1723065734}
   - component: {fileID: 1723065735}
+  - component: {fileID: 1723065736}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -5752,6 +5758,7 @@ MonoBehaviour:
   gameManager: {fileID: 1723065723}
   objectManager: {fileID: 1842996180}
   Boundary: 150
+  scrollSpeed: 10
 --- !u!114 &1723065728
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5892,6 +5899,24 @@ MonoBehaviour:
   tab2Condition: {fileID: 1273335461}
   tab3Cost: {fileID: 200364200}
   tab3Condition: {fileID: 1753300540}
+--- !u!114 &1723065736
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1723065723}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 218ed237ca7a75f44b508b96e129610d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  totalDeliveredProduct: 10000
+  totalShippingProduct: 0
+  totalMachineInput: 00000000000000000000000000000000000000000000000000000000000000000000000000000000
+  totalMachineOutput: 00000000000000000000000000000000000000000000000000000000000000000000000000000000
+  totalMachineStockpile: 00000000000000000000000000000000000000000000000000000000000000000000000000000000
+  machineProcessOn: 00000000000000000000
 --- !u!114 &1753300540 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4633870891305915285, guid: 6a4f8355c225a7f439f6e531e764fd4d,
@@ -6043,7 +6068,8 @@ PrefabInstance:
       propertyPath: m_CastShadows
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: -5652501879743191002, guid: 8d91e7910329f8a489afc25defdc3293, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 8d91e7910329f8a489afc25defdc3293, type: 3}
 --- !u!114 &1808938415 stripped
 MonoBehaviour:
@@ -6132,10 +6158,10 @@ MonoBehaviour:
   gridSquare: {fileID: 8270362907156975660, guid: 226e70a90aea1a64ababc2adefa1bdb3,
     type: 3}
   definedGridLocations:
-  - type: 1
-    gridLocationID: 0200000003000000040000000500000006000000
-    spawned: 0100000000
   - type: 2
+    gridLocationID: 2b00000021000000170000002d0000002300000019000000
+    spawned: 010101000000
+  - type: 1
     gridLocationID: 140000001e00000028000000320000003c000000
     spawned: 0101000000
   selectedTile: {fileID: 0}
@@ -8054,5 +8080,7 @@ PrefabInstance:
       propertyPath: m_Name
       value: Melter
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: -5653552178221418134, guid: 6062d95e1dbc45740aa393af6d075638, type: 3}
+    - {fileID: -7497307739463377945, guid: 6062d95e1dbc45740aa393af6d075638, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 6062d95e1dbc45740aa393af6d075638, type: 3}

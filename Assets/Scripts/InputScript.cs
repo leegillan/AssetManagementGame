@@ -16,6 +16,8 @@ public class InputScript : MonoBehaviour
     private int theScreenWidth;
     private int theScreenHeight;
 
+    public float scrollSpeed = 10.0f;
+
     void Start()
     {
         theScreenWidth = Screen.width;
@@ -102,23 +104,25 @@ public class InputScript : MonoBehaviour
                 GetComponent<CameraScript>().MoveRight();
             }
 
-            //If mouse is near the screen edge then move.
-            if (Input.mousePosition.x > theScreenWidth - Boundary)
-            {
-                GetComponent<CameraScript>().MoveRight(); // move on +X axis
-            }
-            if (Input.mousePosition.x < 0 + Boundary)
-            {
-                GetComponent<CameraScript>().MoveLeft(); // move on -X axis
-            }
-            if (Input.mousePosition.y > theScreenHeight - Boundary)
-            {
-                GetComponent<CameraScript>().MoveDown(); // move on +Z axis
-            }
-            if (Input.mousePosition.y < 0 + Boundary)
-            {
-                GetComponent<CameraScript>().MoveUp(); // move on -Z axis
-            }
+            Camera.main.orthographicSize -= (Input.GetAxis("Mouse ScrollWheel") * scrollSpeed) * Time.deltaTime;
+        
+            ////If mouse is near the screen edge then move.
+            //if (Input.mousePosition.x > theScreenWidth - Boundary)
+            //{
+            //    GetComponent<CameraScript>().MoveRight(); // move on +X axis
+            //}
+            //if (Input.mousePosition.x < 0 + Boundary)
+            //{
+            //    GetComponent<CameraScript>().MoveLeft(); // move on -X axis
+            //}
+            //if (Input.mousePosition.y > theScreenHeight - Boundary)
+            //{
+            //    GetComponent<CameraScript>().MoveDown(); // move on +Z axis
+            //}
+            //if (Input.mousePosition.y < 0 + Boundary)
+            //{
+            //    GetComponent<CameraScript>().MoveUp(); // move on -Z axis
+            //}
 
             ///Continously unpausing the game - will have to find a more efficient way for doing this
             ///

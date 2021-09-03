@@ -379,10 +379,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ID: 0
   objectType: 2
+  machineProcessNumber: 2
   isMachine: 1
   machineHealth: 100
   depreciationSpeed: 10
-  productionOutput: 0
+  productionInput: 250
+  productionOutput: 250
   productionSpeed: 0
   maintenanceCost: 500
   operationalCost: 10
